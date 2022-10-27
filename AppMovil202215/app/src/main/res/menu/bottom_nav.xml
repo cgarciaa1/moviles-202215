@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Vinilos"
+        android:id="@+id/vinilos"
+        android:icon="@drawable/ic_baseline_library_books_24"/>
+    <item android:title="Artistas"
+        android:id="@+id/artistas"
+        android:icon="@drawable/ic_baseline_supervised_user_circle_24"/>
+    <item android:title="Coleccionistas"
+        android:id="@+id/colecciones"
+        android:icon="@drawable/ic_baseline_switch_account_24"/>
+</menu>
