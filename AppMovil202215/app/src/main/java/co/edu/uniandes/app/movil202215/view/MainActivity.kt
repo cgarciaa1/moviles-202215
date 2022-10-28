@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import co.edu.uniandes.app.movil202215.R
-import co.edu.uniandes.app.movil202215.Vinilos
-import co.edu.uniandes.app.movil202215.Colecciones
-import co.edu.uniandes.app.movil202215.Artistas
+import co.edu.uniandes.app.movil202215.view.AlbumFragment
+import co.edu.uniandes.app.movil202215.view.CollectorFragment
+import co.edu.uniandes.app.movil202215.view.ArtistFragment
 import co.edu.uniandes.app.movil202215.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,13 +17,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        replaceFragment(Vinilos())
+        replaceFragment(AlbumFragment())
 
-        binding.bottomNavigationView.setOnItemSelectedListener {
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.vinilos -> replaceFragment(Vinilos())
-                R.id.artistas -> replaceFragment(Artistas())
-                R.id.colecciones -> replaceFragment(Colecciones())
+                R.id.vinilos -> replaceFragment(AlbumFragment())
+                R.id.artistas -> replaceFragment(ArtistFragment())
+                R.id.colecciones -> replaceFragment(CollectorFragment())
 
                 else -> {}
             }
