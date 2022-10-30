@@ -14,7 +14,7 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Colecciones.newInstance] factory method to
+ * Use the [Collections.newInstance] factory method to
  * create an instance of this fragment.
  */
 class CollectorFragment : Fragment() {
@@ -35,7 +35,7 @@ class CollectorFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_colecciones, container, false)
+        return inflater.inflate(R.layout.fragment_collections, container, false)
     }
 
     companion object {
@@ -45,7 +45,7 @@ class CollectorFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Colecciones.
+         * @return A new instance of fragment Collections.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
