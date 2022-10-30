@@ -10,6 +10,7 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.app.movil202215.R
 import com.google.android.material.imageview.ShapeableImageView
+import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
 
 class AlbumAdapter(private val albumList: ArrayList<Album>): RecyclerView.Adapter<AlbumAdapter.ViewHolder>() {
@@ -23,7 +24,7 @@ class AlbumAdapter(private val albumList: ArrayList<Album>): RecyclerView.Adapte
         val currentItem = albumList[position]
         holder.itemTitle.text = currentItem.title
         holder.itemDetail.text = currentItem.detail
-        holder.itemImage.setImageURI(currentItem.image.toUri())
+        Picasso.get().load(currentItem.image).placeholder(R.drawable.image_loader).resize(100, 100).centerCrop().into(holder.itemImage);
     }
 
     override fun getItemCount(): Int {

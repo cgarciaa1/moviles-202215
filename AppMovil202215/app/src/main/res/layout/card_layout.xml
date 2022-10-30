@@ -52,7 +52,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:background="@color/grey_app"
-            android:contentDescription="Image"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
