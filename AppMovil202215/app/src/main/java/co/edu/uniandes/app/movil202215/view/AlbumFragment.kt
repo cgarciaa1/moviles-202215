@@ -13,7 +13,7 @@ class AlbumFragment : Fragment() {
 
     private lateinit var adapter : AlbumAdapter
     private lateinit var recyclerView: RecyclerView
-    private lateinit var albumList: ArrayList<Album>
+    private lateinit var albumList: ArrayList<AlbumModel>
 
     private lateinit var image: Array<String>
     private lateinit var title : Array<String>
@@ -39,16 +39,14 @@ class AlbumFragment : Fragment() {
     }
 
     private fun dataInitialize(){
-        albumList = arrayListOf<Album>()
-
-        // TODO: This information will be updated with the API call when integrating.
-        title = arrayOf("Buscando América", "Poeta del pueblo", "A Night at the Opera", "A Day at the Races")
-        detail = arrayOf("Salsa", "Salsa", "Rock", "Rock")
-        image = arrayOf("https://i.pinimg.com/564x/aa/5f/ed/aa5fed7fac61cc8f41d1e79db917a7cd.jpg", "https://cdn.shopify.com/s/files/1/0275/3095/products/image_4931268b-7acf-4702-9c55-b2b3a03ed999_1024x1024.jpg", "https://upload.wikimedia.org/wikipedia/en/4/4d/Queen_A_Night_At_The_Opera.png", "https://www.udiscovermusic.com/wp-content/uploads/2019/11/a-day-at-the-races.jpg")
-
-        for (i in image.indices) {
-            val album = Album(title[i], detail[i], image[i])
-            albumList.add(album)
-        }
+        albumList = arrayListOf<AlbumModel>()
+        // TODO: This is going to get used to fetch all the information from the DB
+        albumList.add(AlbumModel(100,
+            "Buscando América",
+            "https://i.pinimg.com/564x/aa/5f/ed/aa5fed7fac61cc8f41d1e79db917a7cd.jpg",
+            "1984-08-01",
+            "Buscando América es el primer álbum de la banda de Rubén Blades y Seis del Solar lanzado en 1984. La producción, bajo el sello Elektra, fusiona diferentes ritmos musicales tales como la salsa, reggae, rock, y el jazz latino. El disco fue grabado en Eurosound Studios en Nueva York entre mayo y agosto de 1983.",
+            "Salsa",
+            "Elektra"))
     }
 }
