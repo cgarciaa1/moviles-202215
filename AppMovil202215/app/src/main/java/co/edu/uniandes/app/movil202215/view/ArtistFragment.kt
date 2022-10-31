@@ -14,7 +14,7 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [Artistas.newInstance] factory method to
+ * Use the [Artists.newInstance] factory method to
  * create an instance of this fragment.
  */
 class ArtistFragment : Fragment() {
@@ -35,7 +35,7 @@ class ArtistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_artistas, container, false)
+        return inflater.inflate(R.layout.fragment_artists, container, false)
     }
 
     companion object {

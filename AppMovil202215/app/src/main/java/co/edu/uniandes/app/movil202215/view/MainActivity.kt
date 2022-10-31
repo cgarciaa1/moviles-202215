@@ -4,9 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import co.edu.uniandes.app.movil202215.R
-import co.edu.uniandes.app.movil202215.view.AlbumFragment
-import co.edu.uniandes.app.movil202215.view.CollectorFragment
-import co.edu.uniandes.app.movil202215.view.ArtistFragment
 import co.edu.uniandes.app.movil202215.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -21,9 +18,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.vinilos -> replaceFragment(AlbumFragment())
-                R.id.artistas -> replaceFragment(ArtistFragment())
-                R.id.colecciones -> replaceFragment(CollectorFragment())
+                R.id.albums -> replaceFragment(AlbumFragment())
+                R.id.artists -> replaceFragment(ArtistFragment())
+                R.id.collections -> replaceFragment(CollectorFragment())
 
                 else -> {}
             }
