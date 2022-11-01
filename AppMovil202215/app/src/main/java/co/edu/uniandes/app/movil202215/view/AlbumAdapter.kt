@@ -11,6 +11,8 @@ import com.squareup.picasso.Picasso
 
 class AlbumAdapter(private val albumList: ArrayList<AlbumModel>): RecyclerView.Adapter<AlbumAdapter.ViewHolder>() {
 
+    var onItemClick: ((AlbumModel) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.card_layout, parent, false)
         return ViewHolder(itemView)
@@ -21,6 +23,10 @@ class AlbumAdapter(private val albumList: ArrayList<AlbumModel>): RecyclerView.A
         holder.itemTitle.text = currentItem.name
         holder.itemDetail.text = currentItem.genre
         Picasso.get().load(currentItem.cover).placeholder(R.drawable.image_loader).resize(100, 100).centerCrop().into(holder.itemImage);
+
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(currentItem)
+        }
     }
 
     override fun getItemCount(): Int {
