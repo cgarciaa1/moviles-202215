@@ -1,9 +1,7 @@
 package co.edu.uniandes.app.movil202215.view.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
@@ -11,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.app.movil202215.R
 import co.edu.uniandes.app.movil202215.databinding.AlbumItemBinding
 import co.edu.uniandes.app.movil202215.models.Album
-//import co.edu.uniandes.app.movil202215.view.AlbumFragmentDirections
+import co.edu.uniandes.app.movil202215.view.AlbumFragmentDirections
 import com.squareup.picasso.Picasso
 
 class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
@@ -38,11 +36,12 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
         val currentItem = albums[position]
         holder.bindImage(currentItem)
 
-      /**  holder.viewDataBinding.root.setOnClickListener {
+        holder.viewDataBinding.root.setOnClickListener {
             val action = AlbumFragmentDirections.actionAlbumFragmentToCommentFragment(albums[position].albumId)
             // Navigate using that action
             holder.viewDataBinding.root.findNavController().navigate(action)
-        }**/
+
+        }
     }
 
     override fun getItemCount(): Int {
@@ -56,7 +55,6 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
             @LayoutRes
             val LAYOUT = R.layout.album_item
         }
-
 
         fun bindImage(album: Album){
 
