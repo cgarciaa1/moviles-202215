@@ -1,68 +1,72 @@
 package co.edu.uniandes.app.movil202215.view
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.app.movil202215.R
+import co.edu.uniandes.app.movil202215.databinding.AlbumFragmentBinding
+import co.edu.uniandes.app.movil202215.models.Album
+import co.edu.uniandes.app.movil202215.view.adapters.AlbumsAdapter
+import co.edu.uniandes.app.movil202215.viewmodels.AlbumViewModel
 
+/**
+ * A simple [Fragment] subclass as the default destination in the navigation.
+ */
 class AlbumFragment : Fragment() {
-
-    private lateinit var adapter : AlbumAdapter
+    private var _binding: AlbumFragmentBinding? = null
+    private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
-    private lateinit var albumList: ArrayList<AlbumModel>
-
-    private lateinit var image: Array<String>
-    private lateinit var title : Array<String>
-    private lateinit var detail: Array<String>
+    private lateinit var viewModel: AlbumViewModel
+    private var viewModelAdapter: AlbumsAdapter? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_albums, container, false)
+        _binding = AlbumFragmentBinding.inflate(inflater, container, false)
+        val view = binding.root
+        viewModelAdapter = AlbumsAdapter()
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        dataInitialize()
-        val layoutManager = LinearLayoutManager(context)
-        recyclerView = view.findViewById(R.id.recycler_view_albums_list)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.setHasFixedSize(true)
-        adapter = AlbumAdapter(albumList)
-        recyclerView.adapter = adapter
-
-        adapter.onItemClick = {
-            val intent = Intent(context?.applicationContext,AlbumActivity::class.java)
-            intent.putExtra("album", it)
-            startActivity(intent)
-
-            // startActivity(intent)
-        }
+        recyclerView = binding.albumsRv
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = viewModelAdapter
     }
 
-    private fun dataInitialize(){
-        albumList = arrayListOf<AlbumModel>()
-        // TODO: This is going to get used to fetch all the information from the DB
-        albumList.add(AlbumModel(100,
-            "Buscando América",
-            "https://i.pinimg.com/564x/aa/5f/ed/aa5fed7fac61cc8f41d1e79db917a7cd.jpg",
-            "1984-08-01",
-            "Buscando América es el primer álbum de la banda de Rubén Blades y Seis del Solar lanzado en 1984. La producción, bajo el sello Elektra, fusiona diferentes ritmos musicales tales como la salsa, reggae, rock, y el jazz latino. El disco fue grabado en Eurosound Studios en Nueva York entre mayo y agosto de 1983.",
-            "Salsa",
-            "Elektra"))
-        albumList.add(AlbumModel(100,
-            "Buscando América",
-            "https://i.pinimg.com/564x/aa/5f/ed/aa5fed7fac61cc8f41d1e79db917a7cd.jpg",
-            "1984-08-01",
-            "Buscando América es el primer álbum de la banda de Rubén Blades y Seis del Solar lanzado en 1984. La producción, bajo el sello Elektra, fusiona diferentes ritmos musicales tales como la salsa, reggae, rock, y el jazz latino. El disco fue grabado en Eurosound Studios en Nueva York entre mayo y agosto de 1983.",
-            "Salsa",
-            "Elektra"))
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val activity = requireNotNull(this.activity) {
+            "You can only access the viewModel after onActivityCreated()"
+        }
+        activity.actionBar?.title = getString(R.string.title_albums)
+        viewModel = ViewModelProvider(this, AlbumViewModel.Factory(activity.application)).get(AlbumViewModel::class.java)
+        viewModel.albums.observe(viewLifecycleOwner, Observer<List<Album>> {
+            it.apply {
+                viewModelAdapter!!.albums = this
+            }
+        })
+        viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
+            if (isNetworkError) onNetworkError()
+        })
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun onNetworkError() {
+        if(!viewModel.isNetworkErrorShown.value!!) {
+            Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
+            viewModel.onNetworkErrorShown()
+        }
     }
 }
