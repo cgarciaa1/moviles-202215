@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/albumsFragment">
+
+    <fragment
+        android:id="@+id/albumsFragment"
+        android:name="co.edu.uniandes.app.movil202215.view.AlbumFragment"
+        android:label="Albums"
+        tools:layout="@layout/album_fragment"  >
+        <action
+            android:id="@+id/action_albumFragment_to_commentFragment"
+            app:destination="@id/detailAlbumFragment"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailAlbumFragment"
+        android:name="co.edu.uniandes.app.movil202215.view.DetailAlbumFragment"
+        android:label="comment_fragment"
+        tools:layout="@layout/detail_album_fragment" >
+        <argument
+            android:name="albumId"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/artistFragmentNav"
+        android:name="co.edu.uniandes.app.movil202215.view.ArtistFragment"
+        android:label="artist_fragment"
+        tools:layout="@layout/fragment_artists" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/collectorsFragmentNav"
+        android:name="co.edu.uniandes.app.movil202215.view.CollectorFragment"
+        android:label="artist_fragment"
+        tools:layout="@layout/fragment_collections" >
+    </fragment>
+
+</navigation>
+
+
+

@@ -2,36 +2,23 @@ package co.edu.uniandes.app.movil202215.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import co.edu.uniandes.app.movil202215.R
-import co.edu.uniandes.app.movil202215.databinding.ActivityMainBinding
+
+
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        replaceFragment(AlbumFragment())
+        setContentView(R.layout.activity_main)
 
-        binding.bottomNavigationView.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.albums -> replaceFragment(AlbumFragment())
-                R.id.artists -> replaceFragment(ArtistFragment())
-                R.id.collections -> replaceFragment(CollectorFragment())
-
-                else -> {}
-            }
-            true
-        }
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout,fragment)
-        fragmentTransaction.commit()
+        val navController = this.findNavController(R.id.nav_host_fragment)
+        // Find reference to bottom navigation view
+        val navView: BottomNavigationView = findViewById(R.id.bottom_nav_view)
+        // Hook your navigation controller to bottom navigation view
+        navView.setupWithNavController(navController)
     }
 }
