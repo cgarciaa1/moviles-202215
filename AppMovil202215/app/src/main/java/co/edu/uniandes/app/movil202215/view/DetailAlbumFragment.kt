@@ -5,9 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
@@ -17,7 +16,9 @@ import co.edu.uniandes.app.movil202215.R
 import co.edu.uniandes.app.movil202215.databinding.DetailAlbumFragmentBinding
 import co.edu.uniandes.app.movil202215.models.Album
 import co.edu.uniandes.app.movil202215.view.adapters.DetailAlbumAdapter
+import co.edu.uniandes.app.movil202215.view.adapters.TrackAdapter
 import co.edu.uniandes.app.movil202215.viewmodels.DetailAlbumViewModel
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -26,8 +27,10 @@ class DetailAlbumFragment : Fragment() {
     private var _binding: DetailAlbumFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerViewTrack: RecyclerView
     private lateinit var viewModel: DetailAlbumViewModel
     private var viewModelAdapter: DetailAlbumAdapter? = null
+    private var viewModelAdapterTrack: TrackAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +39,7 @@ class DetailAlbumFragment : Fragment() {
         _binding = DetailAlbumFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
         viewModelAdapter = DetailAlbumAdapter()
+        viewModelAdapterTrack = TrackAdapter()
         return view
     }
 
@@ -43,6 +47,10 @@ class DetailAlbumFragment : Fragment() {
         recyclerView = binding.commentsRv
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
+
+        recyclerViewTrack = binding.tracksRv
+        recyclerViewTrack.layoutManager = LinearLayoutManager(context)
+        recyclerViewTrack.adapter = viewModelAdapterTrack
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -57,6 +65,7 @@ class DetailAlbumFragment : Fragment() {
         viewModel.comments.observe(viewLifecycleOwner, Observer<List<Album>> {
             it.apply {
                 viewModelAdapter!!.detailAlbum = this
+                viewModelAdapterTrack!!.tracks = this[0].tracks.asList()
                 if(this.isEmpty()){
                     binding.txtNoComments.visibility = View.VISIBLE
                 }else{

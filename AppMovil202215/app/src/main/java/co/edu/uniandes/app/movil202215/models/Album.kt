@@ -1,7 +1,5 @@
 package co.edu.uniandes.app.movil202215.models
 
-import co.edu.uniandes.app.movil202215.view.TrackModel
-
 data class Album (
     val albumId:Int,
     val name:String,
