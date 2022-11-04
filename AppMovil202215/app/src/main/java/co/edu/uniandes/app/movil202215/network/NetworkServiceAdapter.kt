@@ -2,19 +2,19 @@ package co.edu.uniandes.app.movil202215.network
 
 import android.content.Context
 import android.util.Log
-import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.Response
-import com.android.volley.VolleyError
+import co.edu.uniandes.app.movil202215.models.Album
+import co.edu.uniandes.app.movil202215.models.Track
+import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import co.edu.uniandes.app.movil202215.models.Album
-import co.edu.uniandes.app.movil202215.models.Track
 import org.json.JSONArray
 import org.json.JSONObject
 
 class NetworkServiceAdapter constructor(context: Context) {
+
+    val CUSTOM_TIMEOUT = 15000
+
     companion object{
         const val BASE_URL= "https://back-vinilos.herokuapp.com/"
         var instance: NetworkServiceAdapter? = null
@@ -47,6 +47,7 @@ class NetworkServiceAdapter constructor(context: Context) {
             },
             Response.ErrorListener {
                 onError(it)
+                Log.e("REST API - VOLLEY", "Error encontrado: "+it)
             }))
     }
 
@@ -79,7 +80,10 @@ class NetworkServiceAdapter constructor(context: Context) {
     }
 
     private fun getRequest(path:String, responseListener: Response.Listener<String>, errorListener: Response.ErrorListener): StringRequest {
-        return StringRequest(Request.Method.GET, BASE_URL+path, responseListener,errorListener)
+        var request = StringRequest(Request.Method.GET, BASE_URL+path, responseListener,errorListener)
+        request.retryPolicy = DefaultRetryPolicy(CUSTOM_TIMEOUT,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+        return request
     }
     private fun postRequest(path: String, body: JSONObject,  responseListener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener ):JsonObjectRequest{
         return  JsonObjectRequest(Request.Method.POST, BASE_URL+path, body, responseListener, errorListener)
