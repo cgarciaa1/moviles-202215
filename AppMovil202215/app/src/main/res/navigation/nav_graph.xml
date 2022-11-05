@@ -27,6 +27,13 @@
     </fragment>
 
     <fragment
+        android:id="@+id/add_album"
+        android:name="co.edu.uniandes.app.movil202215.view.CreateAlbumFragment"
+        android:label="create_album_fragment"
+        tools:layout="@layout/fragment_create_album" >
+    </fragment>
+
+    <fragment
         android:id="@+id/artistFragmentNav"
         android:name="co.edu.uniandes.app.movil202215.view.ArtistFragment"
         android:label="artist_fragment"
