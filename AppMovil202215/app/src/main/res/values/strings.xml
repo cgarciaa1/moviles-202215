@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">AppMovil202215</string>
+    <string name="app_name">Vinilos</string>
+
+    <string name="app_title">Vinilos</string>
+
+    <string name="txt_no_comments">No hay comentarios para este álbum</string>
+    <string name="title_albums">Albumes</string>
+    <string name="title_comments">Comentarios del álbum</string>
+
+
+    <!--  Bottom navigation menu items  -->
+    <string name="bottom_nav_item_albums">Álbumes</string>
+    <string name="bottom_nav_item_collectors">Coleccionistas</string>
+    <string name="bottom_nav_item_artist">Artistas</string>
 </resources>
