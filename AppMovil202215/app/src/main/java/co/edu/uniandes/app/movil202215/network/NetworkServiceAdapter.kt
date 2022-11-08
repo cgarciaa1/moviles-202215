@@ -10,6 +10,9 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONObject
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class NetworkServiceAdapter constructor(context: Context) {
 
@@ -29,7 +32,7 @@ class NetworkServiceAdapter constructor(context: Context) {
         // applicationContext keeps you from leaking the Activity or BroadcastReceiver if someone passes one in.
         Volley.newRequestQueue(context.applicationContext)
     }
-    fun getAlbums(onComplete:(resp:List<Album>)->Unit, onError: (error:VolleyError)->Unit){
+    suspend fun getAlbums() = suspendCoroutine<List<Album>>{ cont->
         requestQueue.add(getRequest("albums",
             Response.Listener<String> { response ->
                 val resp = JSONArray(response)
@@ -43,15 +46,18 @@ class NetworkServiceAdapter constructor(context: Context) {
                         releaseDate = album.getString("releaseDate"), genre = album.getString("genre"),
                         description = album.getString("description"), tracks = arrayOf<Track>()))
                 }
-                onComplete(list)
+
+                cont.resume(list)
             },
             Response.ErrorListener {
-                onError(it)
                 Log.e("REST API - VOLLEY", "Error encontrado: "+it)
+                cont.resumeWithException(it)
             }))
     }
 
-    fun getAlbumById(albumId:Int, onComplete:(resp:List<Album>)->Unit, onError: (error:VolleyError)->Unit) {
+
+
+    suspend fun getAlbumById(albumId:Int) = suspendCoroutine<List<Album>>{ cont->
         requestQueue.add(getRequest("albums/$albumId",
             Response.Listener<String> { response ->
                 val list = mutableListOf<Album>()
@@ -72,10 +78,12 @@ class NetworkServiceAdapter constructor(context: Context) {
                     releaseDate = item.getString("releaseDate"), genre = item.getString("genre"),
                     description = item.getString("description"),  tracks = trackList.toTypedArray()))
 
-                onComplete(list)
+
+                cont.resume(list)
             },
             Response.ErrorListener {
-                onError(it)
+                Log.e("REST API - VOLLEY", "Error encontrado: "+it)
+                cont.resumeWithException(it)
             }))
     }
 
