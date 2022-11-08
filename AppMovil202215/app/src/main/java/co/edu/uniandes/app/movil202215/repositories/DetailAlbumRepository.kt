@@ -2,7 +2,6 @@ package co.edu.uniandes.app.movil202215.repositories
 
 import android.app.Application
 import co.edu.uniandes.app.movil202215.models.Album
-import com.android.volley.VolleyError
 import co.edu.uniandes.app.movil202215.network.NetworkServiceAdapter
 
 class DetailAlbumRepository (val application: Application){

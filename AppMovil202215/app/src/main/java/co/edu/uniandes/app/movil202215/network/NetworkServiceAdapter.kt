@@ -16,7 +16,7 @@ import kotlin.coroutines.suspendCoroutine
 
 class NetworkServiceAdapter constructor(context: Context) {
 
-    val CUSTOM_TIMEOUT = 15000
+    val customTimeout = 15000
 
     companion object{
         const val BASE_URL= "https://back-vinilos.herokuapp.com/"
@@ -34,7 +34,7 @@ class NetworkServiceAdapter constructor(context: Context) {
     }
     suspend fun getAlbums() = suspendCoroutine<List<Album>>{ cont->
         requestQueue.add(getRequest("albums",
-            Response.Listener<String> { response ->
+            { response ->
                 val resp = JSONArray(response)
                 val list = mutableListOf<Album>()
                 for (i in 0 until resp.length()) {
@@ -44,12 +44,12 @@ class NetworkServiceAdapter constructor(context: Context) {
                     list.add(i, Album(albumId = album.getInt("id"),name = album.getString("name"),
                         cover = album.getString("cover"), recordLabel = album.getString("recordLabel"),
                         releaseDate = album.getString("releaseDate"), genre = album.getString("genre"),
-                        description = album.getString("description"), tracks = arrayOf<Track>()))
+                        description = album.getString("description"), tracks = arrayOf()))
                 }
 
                 cont.resume(list)
             },
-            Response.ErrorListener {
+            {
                 Log.e("REST API - VOLLEY", "Error encontrado: "+it)
                 cont.resumeWithException(it)
             }))
@@ -59,7 +59,7 @@ class NetworkServiceAdapter constructor(context: Context) {
 
     suspend fun getAlbumById(albumId:Int) = suspendCoroutine<List<Album>>{ cont->
         requestQueue.add(getRequest("albums/$albumId",
-            Response.Listener<String> { response ->
+            { response ->
                 val list = mutableListOf<Album>()
 
                 var item = JSONObject(response)
@@ -81,7 +81,7 @@ class NetworkServiceAdapter constructor(context: Context) {
 
                 cont.resume(list)
             },
-            Response.ErrorListener {
+            {
                 Log.e("REST API - VOLLEY", "Error encontrado: "+it)
                 cont.resumeWithException(it)
             }))
@@ -89,14 +89,11 @@ class NetworkServiceAdapter constructor(context: Context) {
 
     private fun getRequest(path:String, responseListener: Response.Listener<String>, errorListener: Response.ErrorListener): StringRequest {
         var request = StringRequest(Request.Method.GET, BASE_URL+path, responseListener,errorListener)
-        request.retryPolicy = DefaultRetryPolicy(CUSTOM_TIMEOUT,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+        request.retryPolicy = DefaultRetryPolicy(customTimeout,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
         return request
     }
     private fun postRequest(path: String, body: JSONObject,  responseListener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener ):JsonObjectRequest{
         return  JsonObjectRequest(Request.Method.POST, BASE_URL+path, body, responseListener, errorListener)
-    }
-    private fun putRequest(path: String, body: JSONObject,  responseListener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener ):JsonObjectRequest{
-        return  JsonObjectRequest(Request.Method.PUT, BASE_URL+path, body, responseListener, errorListener)
     }
 }

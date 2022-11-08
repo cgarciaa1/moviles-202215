@@ -1,5 +1,6 @@
 package co.edu.uniandes.app.movil202215.view.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
@@ -8,11 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.app.movil202215.R
 import co.edu.uniandes.app.movil202215.databinding.TrackItemBinding
 import co.edu.uniandes.app.movil202215.models.Track
-import com.squareup.picasso.Picasso
 
 class TrackAdapter : RecyclerView.Adapter<TrackAdapter.CommentViewHolder>(){
 
     var tracks :List<Track> = emptyList()
+        @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()

@@ -1,5 +1,6 @@
 package co.edu.uniandes.app.movil202215.view.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
@@ -13,6 +14,7 @@ import com.squareup.picasso.Picasso
 class DetailAlbumAdapter : RecyclerView.Adapter<DetailAlbumAdapter.CommentViewHolder>(){
 
     var detailAlbum :List<Album> = emptyList()
+        @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -49,7 +51,7 @@ class DetailAlbumAdapter : RecyclerView.Adapter<DetailAlbumAdapter.CommentViewHo
 
         fun bindImage(album: Album){
 
-            Picasso.get().load(album.cover).placeholder(R.drawable.image_loader).resize(100, 100)
+            Picasso.get().load(album.cover).resize(100, 100)
                 .centerCrop().into(viewDataBinding.coverDetail)
         }
 

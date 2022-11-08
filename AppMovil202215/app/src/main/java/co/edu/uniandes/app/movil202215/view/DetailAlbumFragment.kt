@@ -7,14 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.app.movil202215.R
 import co.edu.uniandes.app.movil202215.databinding.DetailAlbumFragmentBinding
-import co.edu.uniandes.app.movil202215.models.Album
 import co.edu.uniandes.app.movil202215.view.adapters.DetailAlbumAdapter
 import co.edu.uniandes.app.movil202215.view.adapters.TrackAdapter
 import co.edu.uniandes.app.movil202215.viewmodels.DetailAlbumViewModel
@@ -35,7 +33,7 @@ class DetailAlbumFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = DetailAlbumFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
         viewModelAdapter = DetailAlbumAdapter()
@@ -62,20 +60,20 @@ class DetailAlbumFragment : Fragment() {
         val args: DetailAlbumFragmentArgs by navArgs()
         Log.d("Args", args.albumId.toString())
         viewModel = ViewModelProvider(this, DetailAlbumViewModel.Factory(activity.application, args.albumId)).get(DetailAlbumViewModel::class.java)
-        viewModel.comments.observe(viewLifecycleOwner, Observer<List<Album>> {
+        viewModel.comments.observe(viewLifecycleOwner) {
             it.apply {
                 viewModelAdapter!!.detailAlbum = this
                 viewModelAdapterTrack!!.tracks = this[0].tracks.asList()
-                if(this.isEmpty()){
+                if (this.isEmpty()) {
                     binding.txtNoComments.visibility = View.VISIBLE
-                }else{
+                } else {
                     binding.txtNoComments.visibility = View.GONE
                 }
             }
-        })
-        viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
+        }
+        viewModel.eventNetworkError.observe(viewLifecycleOwner) { isNetworkError ->
             if (isNetworkError) onNetworkError()
-        })
+        }
     }
     override fun onDestroyView() {
         super.onDestroyView()
