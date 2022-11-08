@@ -1,10 +1,8 @@
 package co.edu.uniandes.app.movil202215.viewmodels
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import co.edu.uniandes.app.movil202215.models.Album
-import co.edu.uniandes.app.movil202215.network.NetworkServiceAdapter
 import co.edu.uniandes.app.movil202215.repositories.AlbumRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,12 +17,12 @@ class AlbumViewModel(application: Application) :  AndroidViewModel(application) 
     val albums: LiveData<List<Album>>
         get() = _albums
 
-    private var _eventNetworkError = MutableLiveData<Boolean>(false)
+    private var _eventNetworkError = MutableLiveData(false)
 
     val eventNetworkError: LiveData<Boolean>
         get() = _eventNetworkError
 
-    private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)
+    private var _isNetworkErrorShown = MutableLiveData(false)
 
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
