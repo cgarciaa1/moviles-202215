@@ -8,5 +8,5 @@ data class Album (
     val description:String,
     val genre:String,
     val recordLabel:String,
-    var tracks: Array<Track>,
+    var tracks: List<Track>,
 )

@@ -30,7 +30,7 @@
         android:id="@+id/artistFragmentNav"
         android:name="co.edu.uniandes.app.movil202215.view.ArtistFragment"
         android:label="artist_fragment"
-        tools:layout="@layout/fragment_artists" >
+        tools:layout="@layout/artist_fragment" >
     </fragment>
 
     <fragment

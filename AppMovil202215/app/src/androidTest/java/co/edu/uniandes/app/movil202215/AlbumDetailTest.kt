@@ -3,7 +3,6 @@ package co.edu.uniandes.app.movil202215
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -33,7 +32,7 @@ class AlbumDetailTest {
     fun getAlbumHu02() {
 
         Thread.sleep(10000)
-        onView(allOf(ViewMatchers.withResourceName("albumsFragment"),isDisplayed())).perform(click())
+        onView(allOf(withResourceName("albumsFragment"),isDisplayed())).perform(click())
         Thread.sleep(3000)
         onView(allOf(withId(R.id.card_view_layout_text_title), withText("Buscando América"),isDisplayed())).perform(click())
 
