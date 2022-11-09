@@ -3,6 +3,7 @@ package co.edu.uniandes.app.movil202215.network
 import android.content.Context
 import android.util.Log
 import co.edu.uniandes.app.movil202215.models.Album
+import co.edu.uniandes.app.movil202215.models.Artist
 import co.edu.uniandes.app.movil202215.models.Track
 import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
@@ -16,11 +17,11 @@ import kotlin.coroutines.suspendCoroutine
 
 class NetworkServiceAdapter constructor(context: Context) {
 
-    val customTimeout = 15000
+    private val customTimeout = 15000
 
     companion object{
         const val BASE_URL= "https://back-vinilos.herokuapp.com/"
-        var instance: NetworkServiceAdapter? = null
+        private var instance: NetworkServiceAdapter? = null
         fun getInstance(context: Context) =
             instance ?: synchronized(this) {
                 instance ?: NetworkServiceAdapter(context).also {
@@ -44,30 +45,28 @@ class NetworkServiceAdapter constructor(context: Context) {
                     list.add(i, Album(albumId = album.getInt("id"),name = album.getString("name"),
                         cover = album.getString("cover"), recordLabel = album.getString("recordLabel"),
                         releaseDate = album.getString("releaseDate"), genre = album.getString("genre"),
-                        description = album.getString("description"), tracks = arrayOf()))
+                        description = album.getString("description"), tracks = listOf()))
                 }
 
                 cont.resume(list)
             },
             {
-                Log.e("REST API - VOLLEY", "Error encontrado: "+it)
+                Log.e("REST API - VOLLEY", "Error encontrado: $it")
                 cont.resumeWithException(it)
             }))
     }
-
-
 
     suspend fun getAlbumById(albumId:Int) = suspendCoroutine<List<Album>>{ cont->
         requestQueue.add(getRequest("albums/$albumId",
             { response ->
                 val list = mutableListOf<Album>()
 
-                var item = JSONObject(response)
-                var tracksArray :JSONArray =  item.getJSONArray("tracks")
+                val item = JSONObject(response)
+                val tracksArray :JSONArray =  item.getJSONArray("tracks")
                 val trackList = mutableListOf<Track>()
 
                 for (j in 0 until tracksArray.length()) {
-                    var itemtrack:JSONObject = tracksArray.getJSONObject(j)
+                    val itemtrack:JSONObject = tracksArray.getJSONObject(j)
                     trackList.add(j, Track(trackId = itemtrack.getInt("id"),name = itemtrack.getString("name"),
                         duration = itemtrack.getString("duration")))
                 }
@@ -76,19 +75,54 @@ class NetworkServiceAdapter constructor(context: Context) {
                 list.add(Album(albumId = item.getInt("id"),name = item.getString("name"),
                     cover = item.getString("cover"), recordLabel = item.getString("recordLabel"),
                     releaseDate = item.getString("releaseDate"), genre = item.getString("genre"),
-                    description = item.getString("description"),  tracks = trackList.toTypedArray()))
+                    description = item.getString("description"),  tracks = trackList))
 
 
                 cont.resume(list)
             },
             {
-                Log.e("REST API - VOLLEY", "Error encontrado: "+it)
+                Log.e("REST API - VOLLEY", "Error encontrado: $it")
+                cont.resumeWithException(it)
+            }))
+    }
+
+    suspend fun getArtists() = suspendCoroutine<List<Artist>>{ cont->
+        requestQueue.add(getRequest("musicians",
+            { response ->
+                val resp = JSONArray(response)
+                val list = mutableListOf<Artist>()
+                for (i in 0 until resp.length()) {
+
+                    val album = resp.getJSONObject(i)
+
+                    val albumsArray :JSONArray =  album.getJSONArray("albums")
+                    val albumList = mutableListOf<Album>()
+
+                    for (j in 0 until albumsArray.length()) {
+                        val albumItem:JSONObject = albumsArray.getJSONObject(j)
+
+                        albumList.add(Album(albumId = albumItem.getInt("id"),name = albumItem.getString("name"),
+                            cover = albumItem.getString("cover"), recordLabel = albumItem.getString("recordLabel"),
+                            releaseDate = albumItem.getString("releaseDate"), genre = albumItem.getString("genre"),
+                            description = albumItem.getString("description"),  tracks = listOf()))
+                    }
+
+                    list.add(i, Artist(id = album.getInt("id"),name = album.getString("name"),
+                        image = album.getString("image"), birthDate = album.getString("birthDate"),
+
+                        description = album.getString("description"), albums =albumList))
+                }
+
+                cont.resume(list)
+            },
+            {
+                Log.e("REST API - VOLLEY", "Error encontrado: $it")
                 cont.resumeWithException(it)
             }))
     }
 
     private fun getRequest(path:String, responseListener: Response.Listener<String>, errorListener: Response.ErrorListener): StringRequest {
-        var request = StringRequest(Request.Method.GET, BASE_URL+path, responseListener,errorListener)
+        val request = StringRequest(Request.Method.GET, BASE_URL+path, responseListener,errorListener)
         request.retryPolicy = DefaultRetryPolicy(customTimeout,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
         return request
