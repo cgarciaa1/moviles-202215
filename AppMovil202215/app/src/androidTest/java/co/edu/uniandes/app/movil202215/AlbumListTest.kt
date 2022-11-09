@@ -3,7 +3,6 @@ package co.edu.uniandes.app.movil202215
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -34,7 +33,7 @@ class AlbumListTest {
     fun listAlbumsHu01() {
 
         Thread.sleep(10000)
-        onView(allOf(ViewMatchers.withResourceName("albumsFragment"),
+        onView(allOf(withResourceName("albumsFragment"),
             isDisplayed()))
             .perform(click())
 

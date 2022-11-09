@@ -63,7 +63,7 @@ class DetailAlbumFragment : Fragment() {
         viewModel.comments.observe(viewLifecycleOwner) {
             it.apply {
                 viewModelAdapter!!.detailAlbum = this
-                viewModelAdapterTrack!!.tracks = this[0].tracks.asList()
+                viewModelAdapterTrack!!.tracks = this[0].tracks
                 if (this.isEmpty()) {
                     binding.txtNoComments.visibility = View.VISIBLE
                 } else {
