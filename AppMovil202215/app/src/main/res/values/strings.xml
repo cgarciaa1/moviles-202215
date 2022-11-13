@@ -1,18 +1,14 @@
 <resources>
     <string name="app_name">Vinilos</string>
-
-    <string name="app_title">Vinilos</string>
-
     <string name="txt_no_comments">No hay comentarios para este álbum</string>
     <string name="title_albums">Albumes</string>
+    <string name="title_artists">Artistas</string>
     <string name="title_comments">Comentarios del álbum</string>
-
-
-    <!--  Bottom navigation menu items  -->
     <string name="bottom_nav_item_albums">Álbumes</string>
     <string name="bottom_nav_item_collectors">Coleccionistas</string>
     <string name="bottom_nav_item_artist">Artistas</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="text_create_album">Crear álbum</string>
+    <string name="image_album_description">Imagen del álbum</string>
+    <string name="image_artist_description">Imagen del artista</string>
 </resources>

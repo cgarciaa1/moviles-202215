@@ -2,20 +2,20 @@ package co.edu.uniandes.app.movil202215.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
-import co.edu.uniandes.app.movil202215.models.Album
-import co.edu.uniandes.app.movil202215.repositories.DetailAlbumRepository
+import co.edu.uniandes.app.movil202215.models.Artist
+import co.edu.uniandes.app.movil202215.repositories.ArtistRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class DetailAlbumViewModel(application: Application, albumId: Int) :  AndroidViewModel(application) {
+class ArtistViewModel(application: Application) :  AndroidViewModel(application) {
 
-    private val detailAlbumRepository = DetailAlbumRepository(application)
+    private val albumsRepository = ArtistRepository(application)
 
-    private val _albumDetail = MutableLiveData<List<Album>>()
+    private val _artists = MutableLiveData<List<Artist>>()
 
-    val comments: LiveData<List<Album>>
-        get() = _albumDetail
+    val albums: LiveData<List<Artist>>
+        get() = _artists
 
     private var _eventNetworkError = MutableLiveData(false)
 
@@ -27,19 +27,16 @@ class DetailAlbumViewModel(application: Application, albumId: Int) :  AndroidVie
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
-    val id:Int = albumId
-
     init {
         refreshDataFromNetwork()
     }
-
 
     private fun refreshDataFromNetwork() {
         try {
             viewModelScope.launch  (Dispatchers.Default){
                 withContext(Dispatchers.IO){
-                    val data = detailAlbumRepository.refreshData(id)
-                    _albumDetail.postValue(data)
+                    var data = albumsRepository.refreshData()
+                    _artists.postValue(data)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
@@ -50,18 +47,17 @@ class DetailAlbumViewModel(application: Application, albumId: Int) :  AndroidVie
         }
     }
 
-
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
     }
 
-    class Factory(val app: Application, private val albumId: Int) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(DetailAlbumViewModel::class.java)) {
+    class Factory(val app: Application) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(ArtistViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return DetailAlbumViewModel(app, albumId) as T
+                return ArtistViewModel(app) as T
             }
-            throw IllegalArgumentException("Unable to construct view-model")
+            throw IllegalArgumentException("Unable to construct viewmodel")
         }
     }
 }
