@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import co.edu.uniandes.app.movil202215.models.Album
 import co.edu.uniandes.app.movil202215.models.Artist
+import co.edu.uniandes.app.movil202215.models.Collector
 import co.edu.uniandes.app.movil202215.models.Track
 import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
@@ -111,6 +112,30 @@ class NetworkServiceAdapter constructor(context: Context) {
                         image = album.getString("image"), birthDate = album.getString("birthDate"),
 
                         description = album.getString("description"), albums =albumList))
+                }
+
+                cont.resume(list)
+            },
+            {
+                Log.e("REST API - VOLLEY", "Error encontrado: $it")
+                cont.resumeWithException(it)
+            }))
+    }
+
+    suspend fun getCollectors() = suspendCoroutine<List<Collector>> { cont->
+        requestQueue.add(getRequest("collectors",
+            { response ->
+                val resp = JSONArray(response)
+                val list = mutableListOf<Collector>()
+                for (i in 0 until resp.length()) {
+
+                    val collector = resp.getJSONObject(i)
+
+                    val collectorAlbums :JSONArray =  collector.getJSONArray("collectorAlbums")
+
+                    list.add(i, Collector(id = collector.getInt("id"), name = collector.getString("name"),
+                        telephone = collector.getString("telephone"), email = collector.getString("email"),
+                        albumsCount = collectorAlbums.length()))
                 }
 
                 cont.resume(list)
