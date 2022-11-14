@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.app.movil202215.R
 import co.edu.uniandes.app.movil202215.databinding.ArtistItemBinding
 import co.edu.uniandes.app.movil202215.models.Artist
+import co.edu.uniandes.app.movil202215.view.ArtistFragmentDirections
 import com.squareup.picasso.Picasso
 
-class ArtistAdapter : RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>(){
+class ArtistsAdapter : RecyclerView.Adapter<ArtistsAdapter.ArtistViewHolder>(){
 
     var artists :List<Artist> = emptyList()
         @SuppressLint("NotifyDataSetChanged")
@@ -36,14 +38,11 @@ class ArtistAdapter : RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>(){
         val currentItem = artists[position]
         holder.bindImage(currentItem)
 
-    //fragmento para agregar la navegacion hacia el detalle del artista
-    /**    holder.viewDataBinding.root.setOnClickListener {
-            val action = ArtistFragmentDirections.actionAlbumFragmentToCommentFragment(artists[position].id)
+        holder.viewDataBinding.root.setOnClickListener {
+            val action = ArtistFragmentDirections.actionArtistFragmentNavToDetailArtistFragment(artists[position].artistId)
             // Navigate using that action
             holder.viewDataBinding.root.findNavController().navigate(action)
-
         }
-    **/
     }
 
     override fun getItemCount(): Int {

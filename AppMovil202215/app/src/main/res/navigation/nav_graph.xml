@@ -27,10 +27,22 @@
     </fragment>
 
     <fragment
-        android:id="@+id/artistFragmentNav"
+        android:id="@+id/artistFragment"
         android:name="co.edu.uniandes.app.movil202215.view.ArtistFragment"
-        android:label="artist_fragment"
+        android:label="Artists"
         tools:layout="@layout/artist_fragment" >
+        <action
+            android:id="@+id/action_artistFragmentNav_to_detailArtistFragment"
+            app:destination="@id/detailArtistFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailArtistFragment"
+        android:name="co.edu.uniandes.app.movil202215.view.DetailArtistFragment"
+        android:label="comment_fragment"
+        tools:layout="@layout/detail_artist_fragment">
+        <argument android:name="artistId"
+            app:argType="integer" />
     </fragment>
 
     <fragment
