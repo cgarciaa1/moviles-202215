@@ -17,7 +17,7 @@ import co.edu.uniandes.app.movil202215.view.MainActivity
 import com.squareup.picasso.Picasso
 
 
-class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
+class DetailArtistAlbumsAdapter : RecyclerView.Adapter<DetailArtistAlbumsAdapter.AlbumViewHolder>(){
 
     var albums :List<Album> = emptyList()
         @SuppressLint("NotifyDataSetChanged")
@@ -41,12 +41,6 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
         }
         val currentItem = albums[position]
         holder.bindImage(currentItem)
-
-        holder.viewDataBinding.root.setOnClickListener {
-            val action = AlbumFragmentDirections.actionAlbumFragmentToCommentFragment(albums[position].albumId)
-            // Navigate using that action
-            holder.viewDataBinding.root.findNavController().navigate(action)
-        }
     }
 
     override fun getItemCount(): Int {

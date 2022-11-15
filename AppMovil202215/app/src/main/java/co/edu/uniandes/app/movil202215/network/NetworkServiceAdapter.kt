@@ -108,12 +108,44 @@ class NetworkServiceAdapter constructor(context: Context) {
                             description = albumItem.getString("description"),  tracks = listOf()))
                     }
 
-                    list.add(i, Artist(id = album.getInt("id"),name = album.getString("name"),
+                    list.add(i, Artist(artistId = album.getInt("id"),name = album.getString("name"),
                         image = album.getString("image"), birthDate = album.getString("birthDate"),
 
                         description = album.getString("description"), albums =albumList))
                 }
 
+                cont.resume(list)
+            },
+            {
+                Log.e("REST API - VOLLEY", "Error encontrado: $it")
+                cont.resumeWithException(it)
+            }))
+    }
+
+
+    suspend fun getArtistById(artistId:Int) = suspendCoroutine<List<Artist>>{ cont->
+        requestQueue.add(getRequest("musicians/$artistId",
+            { response ->
+                val list = mutableListOf<Artist>()
+
+                val item = JSONObject(response)
+                val albumArray :JSONArray =  item.getJSONArray("albums")
+                val albumList = mutableListOf<Album>()
+
+                for (j in 0 until albumArray.length()) {
+                    val itemAlbum:JSONObject = albumArray.getJSONObject(j)
+                    albumList.add(j, Album(albumId = itemAlbum.getInt("id"),name = itemAlbum.getString("name"),
+                        cover = itemAlbum.getString("cover"), recordLabel = itemAlbum.getString("recordLabel"),
+                        releaseDate = itemAlbum.getString("releaseDate"), genre = itemAlbum.getString("genre"),
+                        description = itemAlbum.getString("description"), tracks = listOf())
+                    )
+                }
+
+
+                list.add(Artist(artistId = item.getInt("id"),name = item.getString("name"),
+                    image = item.getString("image"), description = item.getString("description"),
+                    birthDate = item.getString("birthDate").dropLast(14), albums = albumList))
+                
                 cont.resume(list)
             },
             {

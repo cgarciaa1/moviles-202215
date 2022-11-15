@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.app.movil202215.R
 import co.edu.uniandes.app.movil202215.databinding.ArtistFragmentBinding
-import co.edu.uniandes.app.movil202215.view.adapters.ArtistAdapter
+import co.edu.uniandes.app.movil202215.view.adapters.ArtistsAdapter
 import co.edu.uniandes.app.movil202215.viewmodels.ArtistViewModel
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,7 +23,7 @@ class ArtistFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: ArtistViewModel
-    private var viewModelAdapter: ArtistAdapter? = null
+    private var viewModelAdapter: ArtistsAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +31,7 @@ class ArtistFragment : Fragment() {
     ): View {
         _binding = ArtistFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
-        viewModelAdapter = ArtistAdapter()
+        viewModelAdapter = ArtistsAdapter()
         return view
     }
 
@@ -49,7 +49,7 @@ class ArtistFragment : Fragment() {
         activity.actionBar?.title = getString(R.string.title_artists)
         viewModel = ViewModelProvider(this, ArtistViewModel.Factory(activity.application)).get(
             ArtistViewModel::class.java)
-        viewModel.albums.observe(viewLifecycleOwner) {
+        viewModel.artists.observe(viewLifecycleOwner) {
             it.apply {
                 viewModelAdapter!!.artists = this
             }
