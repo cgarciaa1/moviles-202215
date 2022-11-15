@@ -10,5 +10,6 @@
     <string name="bottom_nav_item_artist">Artistas</string>
     <string name="image_album_description">Imagen del álbum</string>
     <string name="image_artist_description">Imagen del artista</string>
+    <string name="track_count_label">Álbumes</string>
 
 </resources>
