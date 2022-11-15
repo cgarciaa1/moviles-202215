@@ -36,8 +36,8 @@
     <fragment
         android:id="@+id/collectorsFragmentNav"
         android:name="co.edu.uniandes.app.movil202215.view.CollectorFragment"
-        android:label="artist_fragment"
-        tools:layout="@layout/fragment_collections" >
+        android:label="collector_fragment"
+        tools:layout="@layout/collector_fragment" >
     </fragment>
 
 </navigation>

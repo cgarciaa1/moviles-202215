@@ -3,11 +3,13 @@
     <string name="txt_no_comments">No hay comentarios para este álbum</string>
     <string name="title_albums">Albumes</string>
     <string name="title_artists">Artistas</string>
+    <string name="title_collectors">Coleccionistas</string>
     <string name="title_comments">Comentarios del álbum</string>
     <string name="bottom_nav_item_albums">Álbumes</string>
     <string name="bottom_nav_item_collectors">Coleccionistas</string>
     <string name="bottom_nav_item_artist">Artistas</string>
     <string name="image_album_description">Imagen del álbum</string>
     <string name="image_artist_description">Imagen del artista</string>
+    <string name="track_count_label">Álbumes:\u0020</string>
 
 </resources>
