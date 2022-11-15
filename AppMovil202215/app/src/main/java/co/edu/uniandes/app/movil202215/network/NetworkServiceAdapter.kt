@@ -142,7 +142,7 @@ class NetworkServiceAdapter constructor(context: Context) {
 
                 list.add(Artist(artistId = item.getInt("id"),name = item.getString("name"),
                     image = item.getString("image"), description = item.getString("description"),
-                    birthDate = item.getString("birthDate"), albums = albumList))
+                    birthDate = item.getString("birthDate").dropLast(14), albums = albumList))
 
 
                 cont.resume(list)

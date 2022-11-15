@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.DetailArtistFragment">
+    tools:context=".view.DetailAlbumFragment">
 
     <TextView
         android:id="@+id/txt_no_comments"
@@ -27,6 +27,6 @@
         android:layout_height="wrap_content"
 
         tools:layout_editor_absoluteX="-16dp"
-        tools:listitem="@layout/album_item" />
+        tools:listitem="@layout/track_item" />
 
 </LinearLayout>

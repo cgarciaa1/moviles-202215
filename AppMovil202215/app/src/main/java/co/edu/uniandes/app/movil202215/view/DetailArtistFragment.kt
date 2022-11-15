@@ -15,6 +15,7 @@ import co.edu.uniandes.app.movil202215.R
 import co.edu.uniandes.app.movil202215.databinding.DetailArtistFragmentBinding
 import co.edu.uniandes.app.movil202215.view.adapters.AlbumsAdapter
 import co.edu.uniandes.app.movil202215.view.adapters.DetailArtistAdapter
+import co.edu.uniandes.app.movil202215.view.adapters.DetailArtistAlbumsAdapter
 import co.edu.uniandes.app.movil202215.view.adapters.TrackAdapter
 import co.edu.uniandes.app.movil202215.viewmodels.DetailArtistViewModel
 
@@ -29,7 +30,7 @@ class DetailArtistFragment : Fragment() {
     private lateinit var recyclerViewAlbum: RecyclerView
     private lateinit var viewModel: DetailArtistViewModel
     private var viewModelAdapter: DetailArtistAdapter? = null
-    private var viewModelAdapterAlbum: AlbumsAdapter? = null
+    private var viewModelAdapterAlbum: DetailArtistAlbumsAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +39,7 @@ class DetailArtistFragment : Fragment() {
         _binding = DetailArtistFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
         viewModelAdapter = DetailArtistAdapter()
-        viewModelAdapterAlbum = AlbumsAdapter()
+        viewModelAdapterAlbum = DetailArtistAlbumsAdapter()
         return view
     }
 
