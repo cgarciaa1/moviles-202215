@@ -39,9 +39,9 @@ class NetworkServiceAdapter constructor(context: Context) {
             { response ->
                 val resp = JSONArray(response)
                 val list = mutableListOf<Album>()
-                for (i in 0 until 100000) {
+                for (i in 0 until resp.length()) {
 
-                    val album = resp.getJSONObject(0)
+                    val album = resp.getJSONObject(i)
 
                     list.add(i, Album(albumId = album.getInt("id"),name = album.getString("name"),
                         cover = album.getString("cover"), recordLabel = album.getString("recordLabel"),
