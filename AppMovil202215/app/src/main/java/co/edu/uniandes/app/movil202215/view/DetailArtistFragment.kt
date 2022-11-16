@@ -13,10 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.app.movil202215.R
 import co.edu.uniandes.app.movil202215.databinding.DetailArtistFragmentBinding
-import co.edu.uniandes.app.movil202215.view.adapters.AlbumsAdapter
 import co.edu.uniandes.app.movil202215.view.adapters.DetailArtistAdapter
 import co.edu.uniandes.app.movil202215.view.adapters.DetailArtistAlbumsAdapter
-import co.edu.uniandes.app.movil202215.view.adapters.TrackAdapter
 import co.edu.uniandes.app.movil202215.viewmodels.DetailArtistViewModel
 
 
