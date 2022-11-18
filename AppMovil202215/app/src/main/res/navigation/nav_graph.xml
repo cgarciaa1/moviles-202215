@@ -15,8 +15,18 @@
             app:destination="@id/detailAlbumFragment"
             />
         <action
+            android:id="@+id/action_detailArtistFragment_to_detailAlbumFragment"
+            app:destination="@id/detailAlbumFragment" />
+        <action
             android:id="@+id/action_albumsFragment_to_add_album"
             app:destination="@id/add_album" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_album"
+        android:name="co.edu.uniandes.app.movil202215.view.CreateAlbumFragment"
+        android:label="create_album_fragment"
+        tools:layout="@layout/fragment_create_album" >
     </fragment>
 
     <fragment
@@ -30,24 +40,29 @@
     </fragment>
 
     <fragment
-        android:id="@+id/add_album"
-        android:name="co.edu.uniandes.app.movil202215.view.CreateAlbumFragment"
-        android:label="create_album_fragment"
-        tools:layout="@layout/fragment_create_album" >
+        android:id="@+id/artistFragment"
+        android:name="co.edu.uniandes.app.movil202215.view.ArtistFragment"
+        android:label="Artists"
+        tools:layout="@layout/artist_fragment" >
+        <action
+            android:id="@+id/action_artistFragmentNav_to_detailArtistFragment"
+            app:destination="@id/detailArtistFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/artistFragmentNav"
-        android:name="co.edu.uniandes.app.movil202215.view.ArtistFragment"
-        android:label="artist_fragment"
-        tools:layout="@layout/artist_fragment" >
+        android:id="@+id/detailArtistFragment"
+        android:name="co.edu.uniandes.app.movil202215.view.DetailArtistFragment"
+        android:label="comment_fragment"
+        tools:layout="@layout/detail_artist_fragment">
+        <argument android:name="artistId"
+            app:argType="integer" />
     </fragment>
 
     <fragment
         android:id="@+id/collectorsFragmentNav"
         android:name="co.edu.uniandes.app.movil202215.view.CollectorFragment"
-        android:label="artist_fragment"
-        tools:layout="@layout/fragment_collections" >
+        android:label="collector_fragment"
+        tools:layout="@layout/collector_fragment" >
     </fragment>
 
 </navigation>

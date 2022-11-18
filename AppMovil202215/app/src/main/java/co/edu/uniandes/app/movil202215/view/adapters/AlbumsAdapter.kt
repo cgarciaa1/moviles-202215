@@ -13,6 +13,7 @@ import co.edu.uniandes.app.movil202215.models.Album
 import co.edu.uniandes.app.movil202215.view.AlbumFragmentDirections
 import com.squareup.picasso.Picasso
 
+
 class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
 
     var albums :List<Album> = emptyList()
@@ -42,7 +43,6 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
             val action = AlbumFragmentDirections.actionAlbumFragmentToCommentFragment(albums[position].albumId)
             // Navigate using that action
             holder.viewDataBinding.root.findNavController().navigate(action)
-
         }
     }
 

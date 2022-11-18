@@ -6,7 +6,7 @@
         android:title="@string/bottom_nav_item_albums" />
 
     <item
-        android:id="@id/artistFragmentNav"
+        android:id="@id/artistFragment"
         android:icon="@drawable/ic_baseline_supervised_user_circle_24"
         android:title="@string/bottom_nav_item_artist" />
 
@@ -14,5 +14,4 @@
         android:id="@id/collectorsFragmentNav"
         android:icon="@drawable/ic_baseline_switch_account_24"
         android:title="@string/bottom_nav_item_collectors" />
-
 </menu>

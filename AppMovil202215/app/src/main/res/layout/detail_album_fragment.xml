@@ -17,7 +17,7 @@
         android:id="@+id/commentsRv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/detail_album_item">
+        tools:listitem="@layout/detail_artist_item">
 
     </androidx.recyclerview.widget.RecyclerView>
 

@@ -10,11 +10,11 @@ import kotlinx.coroutines.withContext
 
 class ArtistViewModel(application: Application) :  AndroidViewModel(application) {
 
-    private val albumsRepository = ArtistRepository(application)
+    private val artistsRepository = ArtistRepository(application)
 
     private val _artists = MutableLiveData<List<Artist>>()
 
-    val albums: LiveData<List<Artist>>
+    val artists: LiveData<List<Artist>>
         get() = _artists
 
     private var _eventNetworkError = MutableLiveData(false)
@@ -35,8 +35,7 @@ class ArtistViewModel(application: Application) :  AndroidViewModel(application)
         try {
             viewModelScope.launch  (Dispatchers.Default){
                 withContext(Dispatchers.IO){
-                    var data = albumsRepository.refreshData()
-                    _artists.postValue(data)
+                    _artists.postValue(artistsRepository.refreshData())
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)

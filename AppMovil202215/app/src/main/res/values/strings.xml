@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">Vinilos</string>
-    <string name="txt_no_comments">No hay comentarios para este álbum</string>
+    <string name="txt_no_comments">No hay comentarios</string>
     <string name="title_albums">Albumes</string>
     <string name="title_artists">Artistas</string>
+    <string name="title_collectors">Coleccionistas</string>
     <string name="title_comments">Comentarios del álbum</string>
+    <string name="artist_comments">Comentarios del Artista</string>
+    <string name="artist_birthDate">Fecha de Nacimiento: </string>
     <string name="bottom_nav_item_albums">Álbumes</string>
     <string name="bottom_nav_item_collectors">Coleccionistas</string>
     <string name="bottom_nav_item_artist">Artistas</string>
@@ -19,4 +22,6 @@
     <string name="input_album_genre">Género del álbum</string>
     <string name="input_album_url">URL del cover</string>
     <string name="buton_add_album">Agregar</string>
+    <string name="track_count_label">Álbumes:\u0020</string>
+
 </resources>
