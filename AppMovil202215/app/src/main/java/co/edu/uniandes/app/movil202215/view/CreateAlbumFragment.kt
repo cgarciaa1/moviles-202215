@@ -1,11 +1,20 @@
 package co.edu.uniandes.app.movil202215.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import co.edu.uniandes.app.movil202215.R
+import co.edu.uniandes.app.movil202215.models.Album
+import co.edu.uniandes.app.movil202215.viewmodels.AlbumViewModel
+import co.edu.uniandes.app.movil202215.viewmodels.CreateAlbumViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +30,7 @@ class CreateAlbumFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var viewModel: CreateAlbumViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +44,62 @@ class CreateAlbumFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_album, container, false)
+        val activity = requireNotNull(this.activity) {
+            "You can only access the viewModel after onActivityCreated()"
+        }
+
+
+
+        val viewFragment = inflater.inflate(R.layout.fragment_create_album, container, false)
+
+
+
+        viewModel = ViewModelProvider(this, CreateAlbumViewModel.Factory(activity.application)).get(CreateAlbumViewModel::class.java)
+        viewModel.eventNetworkError.observe(viewLifecycleOwner) { isNetworkError ->
+            if (isNetworkError) onNetworkError()
+        }
+
+        val fab = viewFragment.findViewById(R.id.button_create_album) as Button
+        fab.setOnClickListener { view ->
+
+            val name = viewFragment.findViewById<View?>(R.id.input_album_name) as EditText
+            val description = viewFragment.findViewById<View?>(R.id.input_album_description) as EditText
+            val cover = viewFragment.findViewById<View?>(R.id.input_album_cover) as EditText
+            val date = viewFragment.findViewById<View?>(R.id.input_album_date) as EditText
+            val genre = viewFragment.findViewById<View?>(R.id.input_album_genre) as EditText
+            val record = viewFragment.findViewById<View?>(R.id.input_album_record) as EditText
+
+
+            val album = Album(albumId = -1, name = name.text.toString(), cover = cover.text.toString(), recordLabel = record.text.toString(),
+                releaseDate = date.text.toString(), genre = genre.text.toString(),description = description.text.toString(),  tracks = listOf())
+            viewModel.createObject(album)
+
+
+        }
+
+
+
+
+        return viewFragment
+
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val activity = requireNotNull(this.activity) {
+            "You can only access the viewModel after onActivityCreated()"
+        }
+        val args: DetailAlbumFragmentArgs by navArgs()
+
+
+
+    }
+
+    private fun onNetworkError() {
+        if(!viewModel.isNetworkErrorShown.value!!) {
+            Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
+            viewModel.onNetworkErrorShown()
+        }
     }
 
     companion object {
