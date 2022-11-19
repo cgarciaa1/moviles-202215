@@ -14,9 +14,6 @@ import co.edu.uniandes.app.movil202215.databinding.ArtistFragmentBinding
 import co.edu.uniandes.app.movil202215.view.adapters.ArtistsAdapter
 import co.edu.uniandes.app.movil202215.viewmodels.ArtistViewModel
 
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 class ArtistFragment : Fragment() {
     private var _binding: ArtistFragmentBinding? = null

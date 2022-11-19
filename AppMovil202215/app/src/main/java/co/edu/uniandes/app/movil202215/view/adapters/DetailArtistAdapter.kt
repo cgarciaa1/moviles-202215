@@ -5,13 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.app.movil202215.R
 import co.edu.uniandes.app.movil202215.databinding.DetailArtistItemBinding
 import co.edu.uniandes.app.movil202215.models.Artist
-import co.edu.uniandes.app.movil202215.view.AlbumFragmentDirections
-import co.edu.uniandes.app.movil202215.view.ArtistFragmentDirections
 import com.squareup.picasso.Picasso
 
 class DetailArtistAdapter : RecyclerView.Adapter<DetailArtistAdapter.CommentViewHolder>(){
