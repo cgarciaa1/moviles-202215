@@ -21,7 +21,8 @@ import org.junit.runner.RunWith
  */
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class AlbumDetailTest {
+class CollectorListTest {
+
 
     @Rule
     @JvmField
@@ -29,17 +30,21 @@ class AlbumDetailTest {
         ActivityScenarioRule (MainActivity::class.java)
 
     @Test
-    fun getAlbumHu02() {
+    fun listArtistHu05() {
 
         Thread.sleep(10000)
-        onView(allOf(withResourceName("albumsFragment"),isDisplayed())).perform(click())
-        Thread.sleep(3000)
-        onView(allOf(withId(R.id.card_view_layout_text_title), withText("Buscando América"),isDisplayed())).perform(click())
+        onView(allOf(withResourceName("collectorsFragmentNav"),
+            isDisplayed()))
+            .perform(click())
 
-        val album1 = onView(allOf(withId(R.id.detail_layout_title), withText("Buscando América"),isDisplayed()))
-        album1.check(ViewAssertions.matches(isDisplayed()))
+        val collector1 = onView(allOf(withId(R.id.card_view_layout_text_title_collector), withText("Manolo Bellon"),isDisplayed()))
+        collector1.check(ViewAssertions.matches(isDisplayed()))
+
+        val collector2 = onView(allOf(withId(R.id.card_view_layout_text_title_collector), withText("Jaime Monsalve"),isDisplayed()))
+        collector2.check(ViewAssertions.matches(isDisplayed()))
 
         Thread.sleep(3000)
+
 
     }
 }

@@ -21,7 +21,7 @@ import org.junit.runner.RunWith
  */
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class AlbumDetailTest {
+class ArtistDetailTest {
 
     @Rule
     @JvmField
@@ -29,15 +29,15 @@ class AlbumDetailTest {
         ActivityScenarioRule (MainActivity::class.java)
 
     @Test
-    fun getAlbumHu02() {
+    fun getAlbumHu04() {
 
         Thread.sleep(10000)
-        onView(allOf(withResourceName("albumsFragment"),isDisplayed())).perform(click())
+        onView(allOf(withResourceName("artistFragment"),isDisplayed())).perform(click())
         Thread.sleep(3000)
-        onView(allOf(withId(R.id.card_view_layout_text_title), withText("Buscando América"),isDisplayed())).perform(click())
-
-        val album1 = onView(allOf(withId(R.id.detail_layout_title), withText("Buscando América"),isDisplayed()))
-        album1.check(ViewAssertions.matches(isDisplayed()))
+        onView(allOf(withId(R.id.card_view_layout_text_title_artist), withText("Rubén Blades Bellido de Luna"),isDisplayed())).perform(click())
+        Thread.sleep(3000)
+        val artist1 = onView(allOf(withId(R.id.detail_layout_title_artist), withText("Rubén Blades Bellido de Luna"),isDisplayed()))
+        artist1.check(ViewAssertions.matches(isDisplayed()))
 
         Thread.sleep(3000)
 
