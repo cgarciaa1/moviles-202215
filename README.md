@@ -1,5 +1,3 @@
-# PARA LA ENTREGA PARCIAL DE LA SEMANA 5, REVISAR LA RAMA DEVELOP
-
 ### moviles-202215
 
 Para construir la aplicación de forma local, se debe clonar el repositorio y posteriormente abrir el proyecto en Android Studio.
