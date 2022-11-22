@@ -6,10 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import co.edu.uniandes.app.movil202215.R
 import co.edu.uniandes.app.movil202215.models.Album
@@ -66,20 +69,54 @@ class CreateAlbumFragment : Fragment() {
             val description = viewFragment.findViewById<View?>(R.id.input_album_description) as EditText
             val cover = viewFragment.findViewById<View?>(R.id.input_album_cover) as EditText
             val date = viewFragment.findViewById<View?>(R.id.input_album_date) as EditText
-            val genre = viewFragment.findViewById<View?>(R.id.input_album_genre) as EditText
-            val record = viewFragment.findViewById<View?>(R.id.input_album_record) as EditText
+            val genre = viewFragment.findViewById<View?>(R.id.spinner_genre) as Spinner
+            val record = viewFragment.findViewById<View?>(R.id.spinner_record) as Spinner
+
+            if (name.text.toString().isEmpty() || description.text.toString().isEmpty() || cover.text.toString().isEmpty() ||
+                date.text.toString().isEmpty()) {
+                Toast.makeText(getActivity(), "Existen campos sin datos",Toast.LENGTH_LONG).show();
+            }else{
+                val album = Album(albumId = -1, name = name.text.toString(), cover = cover.text.toString(), recordLabel = record.getSelectedItem().toString(),
+                    releaseDate = date.text.toString(), genre = genre.getSelectedItem().toString(),description = description.text.toString(),  tracks = listOf())
+                viewModel.createObject(album)
+                Toast.makeText(getActivity(), "Álbum creado",Toast.LENGTH_LONG).show();
+                Navigation.findNavController(view).navigate(R.id.albumsFragment)
+
+            }
 
 
-            val album = Album(albumId = -1, name = name.text.toString(), cover = cover.text.toString(), recordLabel = record.text.toString(),
-                releaseDate = date.text.toString(), genre = genre.text.toString(),description = description.text.toString(),  tracks = listOf())
-            viewModel.createObject(album)
 
 
         }
 
-
-
-
+        val spinner = viewFragment.findViewById<View?>(R.id.spinner_genre) as Spinner
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        getActivity()?.let {
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.genre_array,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                // Specify the layout to use when the list of choices appears
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                // Apply the adapter to the spinner
+                spinner.adapter = adapter
+            }
+        }
+        val spinnerRecord = viewFragment.findViewById<View?>(R.id.spinner_record) as Spinner
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        getActivity()?.let {
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.record_array,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                // Specify the layout to use when the list of choices appears
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                // Apply the adapter to the spinner
+                spinnerRecord.adapter = adapter
+            }
+        }
         return viewFragment
 
     }

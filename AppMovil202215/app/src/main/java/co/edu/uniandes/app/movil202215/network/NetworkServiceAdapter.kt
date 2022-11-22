@@ -2,6 +2,7 @@ package co.edu.uniandes.app.movil202215.network
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import co.edu.uniandes.app.movil202215.models.Album
 import co.edu.uniandes.app.movil202215.models.Artist
 import co.edu.uniandes.app.movil202215.models.Collector
@@ -179,8 +180,6 @@ class NetworkServiceAdapter constructor(context: Context) {
     }
 
     suspend fun createAlbum(albumData:Album) = suspendCoroutine<List<Album>>{ cont->
-        Log.d("", "Llegooooooo"+ this)
-
 
         val parameters = JSONObject()
 
@@ -193,14 +192,10 @@ class NetworkServiceAdapter constructor(context: Context) {
 
         requestQueue.add(postRequest("albums", parameters,
             { response ->
-
-
-
                 cont.resume( listOf())
             },
             {
-                Log.e("REST API - VOLLEY", "Error encontrado: $it")
-                cont.resumeWithException(it)
+                 cont.resumeWithException(it)
             }))
     }
 
@@ -212,7 +207,10 @@ class NetworkServiceAdapter constructor(context: Context) {
         return request
     }
     private fun postRequest(path: String, body: JSONObject,  responseListener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener ):JsonObjectRequest{
-        Log.d("", "Llegooooooo aqui"+ this)
-        return  JsonObjectRequest(Request.Method.POST, BASE_URL+path, body, responseListener, errorListener)
+
+        val request = JsonObjectRequest(Request.Method.POST, BASE_URL+path, body, responseListener, errorListener)
+        request.retryPolicy = DefaultRetryPolicy(customTimeout,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+        return request
     }
 }

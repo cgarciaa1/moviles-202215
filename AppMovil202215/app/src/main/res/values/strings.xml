@@ -23,5 +23,17 @@
     <string name="input_album_url">URL del cover</string>
     <string name="buton_add_album">Agregar</string>
     <string name="track_count_label">Álbumes:\u0020</string>
-
+    <string-array name="genre_array">
+        <item>Classical</item>
+        <item>Salsa</item>
+        <item>Rock</item>
+        <item>Folk</item>
+    </string-array>
+    <string-array name="record_array">
+        <item>Sony Music</item>
+        <item>EMI</item>
+        <item>Discos Fuentes</item>
+        <item>Elektra</item>
+        <item>Fania Records</item>
+    </string-array>
 </resources>

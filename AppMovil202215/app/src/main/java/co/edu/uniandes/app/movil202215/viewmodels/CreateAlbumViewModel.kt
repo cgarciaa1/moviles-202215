@@ -40,7 +40,7 @@ class CreateAlbumViewModel(application: Application) :  AndroidViewModel(applica
         try {
             viewModelScope.launch  (Dispatchers.Default){
                 withContext(Dispatchers.IO){
-                    Log.d("", "Llegooooooo al viewmodel")
+
                     val data = albumRepository.createData(album)
                    // _artistDetail.postValue(data)
                 }

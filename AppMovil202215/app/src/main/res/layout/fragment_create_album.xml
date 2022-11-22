@@ -51,7 +51,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="5dp"
             android:autofillHints="" />
-        <EditText
+        <TextView
             android:id="@+id/input_album_record"
             android:hint="@string/record"
             android:backgroundTint="@color/green_background"
@@ -61,8 +61,15 @@
             android:layout_height="60dp"
             android:layout_marginTop="5dp"
             android:autofillHints=""
+            android:textSize="18sp"
             android:inputType="text"/>
-        <EditText
+        <Spinner
+            android:id="@+id/spinner_record"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:padding="20dp"
+            android:layout_marginTop="5dp"/>
+        <TextView
             android:id="@+id/input_album_genre"
             android:hint="@string/input_album_genre"
             android:backgroundTint="@color/green_background"
@@ -71,8 +78,14 @@
             android:padding="20dp"
             android:layout_height="60dp"
             android:layout_marginTop="5dp"
-            android:autofillHints=""
-            android:inputType="text"/>
+            android:textSize="18sp"
+            android:autofillHints=""/>
+        <Spinner
+            android:id="@+id/spinner_genre"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:padding="20dp"
+            android:layout_marginTop="5dp"/>
         <EditText
             android:id="@+id/input_album_cover"
             android:hint="@string/input_album_url"
