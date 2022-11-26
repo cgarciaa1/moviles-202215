@@ -2,6 +2,7 @@ package co.edu.uniandes.app.movil202215.network
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import co.edu.uniandes.app.movil202215.models.Album
 import co.edu.uniandes.app.movil202215.models.Artist
 import co.edu.uniandes.app.movil202215.models.Collector
@@ -178,6 +179,27 @@ class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
+    suspend fun createAlbum(albumData:Album) = suspendCoroutine<List<Album>>{ cont->
+
+        val parameters = JSONObject()
+
+        parameters.put("name",albumData.name);
+        parameters.put("cover",albumData.cover);
+        parameters.put("releaseDate",albumData.releaseDate);
+        parameters.put("description",albumData.description);
+        parameters.put("genre",albumData.genre);
+        parameters.put("recordLabel",albumData.recordLabel);
+
+        requestQueue.add(postRequest("albums", parameters,
+            { response ->
+                cont.resume( listOf())
+            },
+            {
+                 cont.resumeWithException(it)
+            }))
+    }
+
+
     private fun getRequest(path:String, responseListener: Response.Listener<String>, errorListener: Response.ErrorListener): StringRequest {
         val request = StringRequest(Request.Method.GET, BASE_URL+path, responseListener,errorListener)
         request.retryPolicy = DefaultRetryPolicy(customTimeout,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -185,6 +207,10 @@ class NetworkServiceAdapter constructor(context: Context) {
         return request
     }
     private fun postRequest(path: String, body: JSONObject,  responseListener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener ):JsonObjectRequest{
-        return  JsonObjectRequest(Request.Method.POST, BASE_URL+path, body, responseListener, errorListener)
+
+        val request = JsonObjectRequest(Request.Method.POST, BASE_URL+path, body, responseListener, errorListener)
+        request.retryPolicy = DefaultRetryPolicy(customTimeout,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+        return request
     }
 }
