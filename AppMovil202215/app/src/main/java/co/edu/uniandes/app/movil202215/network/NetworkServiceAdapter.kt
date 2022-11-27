@@ -2,12 +2,14 @@ package co.edu.uniandes.app.movil202215.network
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import co.edu.uniandes.app.movil202215.models.Album
 import co.edu.uniandes.app.movil202215.models.Artist
 import co.edu.uniandes.app.movil202215.models.Collector
 import co.edu.uniandes.app.movil202215.models.Track
-import com.android.volley.*
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -183,12 +185,12 @@ class NetworkServiceAdapter constructor(context: Context) {
 
         val parameters = JSONObject()
 
-        parameters.put("name",albumData.name);
-        parameters.put("cover",albumData.cover);
-        parameters.put("releaseDate",albumData.releaseDate);
-        parameters.put("description",albumData.description);
-        parameters.put("genre",albumData.genre);
-        parameters.put("recordLabel",albumData.recordLabel);
+        parameters.put("name",albumData.name)
+        parameters.put("cover",albumData.cover)
+        parameters.put("releaseDate",albumData.releaseDate)
+        parameters.put("description",albumData.description)
+        parameters.put("genre",albumData.genre)
+        parameters.put("recordLabel",albumData.recordLabel)
 
         requestQueue.add(postRequest("albums", parameters,
             { response ->

@@ -38,7 +38,7 @@ class AlbumFragment : Fragment() {
 
         val fab = view.findViewById(R.id.add_album) as FloatingActionButton
         fab.setOnClickListener { view ->
-            Navigation.findNavController(view).navigate(R.id.action_albumsFragment_to_add_album);
+            Navigation.findNavController(view).navigate(R.id.action_albumsFragment_to_add_album)
         }
 
         return view
