@@ -1,22 +1,16 @@
 package co.edu.uniandes.app.movil202215.view
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import co.edu.uniandes.app.movil202215.R
 import co.edu.uniandes.app.movil202215.models.Album
-import co.edu.uniandes.app.movil202215.viewmodels.AlbumViewModel
 import co.edu.uniandes.app.movil202215.viewmodels.CreateAlbumViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -74,12 +68,12 @@ class CreateAlbumFragment : Fragment() {
 
             if (name.text.toString().isEmpty() || description.text.toString().isEmpty() || cover.text.toString().isEmpty() ||
                 date.text.toString().isEmpty()) {
-                Toast.makeText(getActivity(), "Existen campos sin datos",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Existen campos sin datos",Toast.LENGTH_LONG).show()
             }else{
                 val album = Album(albumId = -1, name = name.text.toString(), cover = cover.text.toString(), recordLabel = record.getSelectedItem().toString(),
                     releaseDate = date.text.toString(), genre = genre.getSelectedItem().toString(),description = description.text.toString(),  tracks = listOf())
                 viewModel.createObject(album)
-                Toast.makeText(getActivity(), "Álbum creado",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Álbum creado",Toast.LENGTH_LONG).show()
                 Navigation.findNavController(view).navigate(R.id.albumsFragment)
 
             }

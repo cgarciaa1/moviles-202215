@@ -1,7 +1,6 @@
 package co.edu.uniandes.app.movil202215.viewmodels
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import co.edu.uniandes.app.movil202215.models.Album
 import co.edu.uniandes.app.movil202215.repositories.AlbumRepository
@@ -16,9 +15,6 @@ class CreateAlbumViewModel(application: Application) :  AndroidViewModel(applica
 
     private val _response = MutableLiveData<Boolean>()
 
-    val operationResponse: LiveData<Boolean>
-        get() = _response
-
     private var _eventNetworkError = MutableLiveData(false)
 
     val eventNetworkError: LiveData<Boolean>
@@ -29,20 +25,13 @@ class CreateAlbumViewModel(application: Application) :  AndroidViewModel(applica
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
-
-
-    init {
-        //refreshDataFromNetwork()
-    }
-
-
     fun createObject(album:Album) {
         try {
             viewModelScope.launch  (Dispatchers.Default){
                 withContext(Dispatchers.IO){
 
-                    val data = albumRepository.createData(album)
-                   // _artistDetail.postValue(data)
+                    albumRepository.createData(album)
+
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
