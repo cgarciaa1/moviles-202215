@@ -24,7 +24,7 @@ class NetworkServiceAdapter constructor(context: Context) {
     private val customTimeout = 15000
 
     companion object{
-        const val BASE_URL= "https://back-vinilos.herokuapp.com/"
+        const val BASE_URL= "https://vinilos-app-grupo-8.herokuapp.com/"
         private var instance: NetworkServiceAdapter? = null
         fun getInstance(context: Context) =
             instance ?: synchronized(this) {

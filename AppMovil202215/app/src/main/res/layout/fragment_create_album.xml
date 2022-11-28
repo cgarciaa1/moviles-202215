@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -45,12 +46,12 @@
             android:hint="@string/input_release_date"
             android:backgroundTint="@color/green_background"
             android:textAlignment="textStart"
-            android:inputType="datetime"
             android:layout_width="match_parent"
             android:padding="20dp"
             android:layout_height="60dp"
             android:layout_marginTop="5dp"
-            android:autofillHints="" />
+            android:autofillHints=""
+            android:inputType="text"/>
         <TextView
             android:id="@+id/input_album_record"
             android:hint="@string/record"
@@ -112,4 +113,5 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
-</FrameLayout>
+
+</ScrollView>
