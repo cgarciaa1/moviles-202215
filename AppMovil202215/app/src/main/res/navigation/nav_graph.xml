@@ -37,6 +37,17 @@
         <argument
             android:name="albumId"
             app:argType="integer" />
+
+        <action
+            android:id="@+id/action_albumDetail_to_addSong"
+            app:destination="@id/add" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_track"
+        android:name="co.edu.uniandes.app.movil202215.view.CreateAlbumFragment"
+        android:label="add_track_fragment"
+        tools:layout="@layout/album_add_song_fragment" >
     </fragment>
 
     <fragment
@@ -56,6 +67,10 @@
         tools:layout="@layout/detail_artist_fragment">
         <argument android:name="artistId"
             app:argType="integer" />
+
+        <action
+            android:id="@+id/action_dr"
+            app:destination="@id/add_track" />
     </fragment>
 
     <fragment
