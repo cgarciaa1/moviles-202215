@@ -2,16 +2,17 @@ package co.edu.uniandes.app.movil202215.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
+import co.edu.uniandes.app.movil202215.models.Track
 import co.edu.uniandes.app.movil202215.models.Album
-import co.edu.uniandes.app.movil202215.repositories.AlbumRepository
+import co.edu.uniandes.app.movil202215.repositories.DetailAlbumRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class CreateAlbumViewModel(application: Application) :  AndroidViewModel(application) {
+class CreateTrackViewModel(application: Application) :  AndroidViewModel(application) {
 
-    private val albumRepository = AlbumRepository(application)
+    private val detailAlbum = DetailAlbumRepository(application)
 
     private val _response = MutableLiveData<Boolean>()
 
@@ -25,12 +26,12 @@ class CreateAlbumViewModel(application: Application) :  AndroidViewModel(applica
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
-    fun createObject(album: Album) {
+    fun createObject(album:Album, track:Track) {
         try {
             viewModelScope.launch  (Dispatchers.Default){
                 withContext(Dispatchers.IO){
 
-                    albumRepository.createData(album)
+                    detailAlbum.addSong(album, track)
 
                 }
                 _eventNetworkError.postValue(false)
@@ -49,9 +50,9 @@ class CreateAlbumViewModel(application: Application) :  AndroidViewModel(applica
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(CreateAlbumViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(CreateTrackViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return CreateAlbumViewModel(app) as T
+                return CreateTrackViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct view-model")
         }

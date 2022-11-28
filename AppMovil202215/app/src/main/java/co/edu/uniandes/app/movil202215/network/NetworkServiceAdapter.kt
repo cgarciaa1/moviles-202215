@@ -201,6 +201,26 @@ class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
+    suspend fun createTrack(albumData:Album) = suspendCoroutine<List<Album>>{ cont->
+
+        val parameters = JSONObject()
+
+        parameters.put("name",albumData.name)
+        parameters.put("cover",albumData.cover)
+        parameters.put("releaseDate",albumData.releaseDate)
+        parameters.put("description",albumData.description)
+        parameters.put("genre",albumData.genre)
+        parameters.put("recordLabel",albumData.recordLabel)
+
+        requestQueue.add(postRequest("albums", parameters,
+            { response ->
+                cont.resume( listOf())
+            },
+            {
+                cont.resumeWithException(it)
+            }))
+    }
+
 
     private fun getRequest(path:String, responseListener: Response.Listener<String>, errorListener: Response.ErrorListener): StringRequest {
         val request = StringRequest(Request.Method.GET, BASE_URL+path, responseListener,errorListener)
