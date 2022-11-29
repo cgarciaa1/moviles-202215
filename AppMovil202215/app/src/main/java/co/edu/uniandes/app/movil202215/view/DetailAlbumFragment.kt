@@ -41,14 +41,6 @@ class DetailAlbumFragment : Fragment() {
         viewModelAdapter = DetailAlbumAdapter()
         viewModelAdapterTrack = TrackAdapter()
 
-
-        val fab = view.findViewById(R.id.add_track_floating) as FloatingActionButton
-        fab.setOnClickListener { view ->
-            val args: DetailAlbumFragmentArgs by navArgs()
-            val action = DetailAlbumFragmentDirections.actionAddTrack(args.albumId)
-            Navigation.findNavController(view).navigate(action)
-        }
-
         return view
     }
 
@@ -60,6 +52,15 @@ class DetailAlbumFragment : Fragment() {
         recyclerViewTrack = binding.tracksRv
         recyclerViewTrack.layoutManager = LinearLayoutManager(context)
         recyclerViewTrack.adapter = viewModelAdapterTrack
+
+
+        val fab = view.findViewById(R.id.add_track_floating) as FloatingActionButton
+        fab.setOnClickListener { view ->
+            val args: DetailAlbumFragmentArgs by navArgs()
+            val action = DetailAlbumFragmentDirections.actionAddTrack(args.albumId)
+            Navigation.findNavController(view).navigate(action)
+        }
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

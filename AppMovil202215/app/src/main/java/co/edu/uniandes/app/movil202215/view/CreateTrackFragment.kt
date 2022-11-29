@@ -46,7 +46,7 @@ class CreateTrackFragment : Fragment() {
             "You can only access the viewModel after onActivityCreated()"
         }
 
-        val args: CreateAlbumFragmentArgs by navArgs()
+        val args: CreateTrackFragmentArgs by navArgs()
         Log.d("","agumento"+ args.albumId)
 
         val viewFragment = inflater.inflate(R.layout.album_add_song_fragment, container, false)
@@ -74,39 +74,8 @@ class CreateTrackFragment : Fragment() {
 
             }
 
-
-
-
         }
 
-        val spinner = viewFragment.findViewById<View?>(R.id.spinner_genre) as Spinner
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        getActivity()?.let {
-            ArrayAdapter.createFromResource(
-                it,
-                R.array.genre_array,
-                android.R.layout.simple_spinner_item
-            ).also { adapter ->
-                // Specify the layout to use when the list of choices appears
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                // Apply the adapter to the spinner
-                spinner.adapter = adapter
-            }
-        }
-        val spinnerRecord = viewFragment.findViewById<View?>(R.id.spinner_record) as Spinner
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        getActivity()?.let {
-            ArrayAdapter.createFromResource(
-                it,
-                R.array.record_array,
-                android.R.layout.simple_spinner_item
-            ).also { adapter ->
-                // Specify the layout to use when the list of choices appears
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                // Apply the adapter to the spinner
-                spinnerRecord.adapter = adapter
-            }
-        }
         return viewFragment
 
     }
