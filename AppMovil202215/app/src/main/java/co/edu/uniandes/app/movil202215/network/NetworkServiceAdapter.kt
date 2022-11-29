@@ -2,10 +2,7 @@ package co.edu.uniandes.app.movil202215.network
 
 import android.content.Context
 import android.util.Log
-import co.edu.uniandes.app.movil202215.models.Album
-import co.edu.uniandes.app.movil202215.models.Artist
-import co.edu.uniandes.app.movil202215.models.Collector
-import co.edu.uniandes.app.movil202215.models.Track
+import co.edu.uniandes.app.movil202215.models.*
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -170,7 +167,63 @@ class NetworkServiceAdapter constructor(context: Context) {
 
                     list.add(i, Collector(id = collector.getInt("id"), name = collector.getString("name"),
                         telephone = collector.getString("telephone"), email = collector.getString("email"),
-                        albumsCount = collectorAlbums.length()))
+                        albumsCount = collectorAlbums.length(), collectorAlbums = emptyList()
+                    ))
+                }
+
+                cont.resume(list)
+            },
+            {
+                Log.e("REST API - VOLLEY", "Error encontrado: $it")
+                cont.resumeWithException(it)
+            }))
+    }
+
+    suspend fun getCollectorById(collectorId:Int) = suspendCoroutine<List<Collector>>{ cont->
+        requestQueue.add(getRequest("collectors/$collectorId",
+            { response ->
+                val list = mutableListOf<Collector>()
+
+                val collector = JSONObject(response)
+                val collectorAlbums :JSONArray =  collector.getJSONArray("collectorAlbums")
+                list.add(Collector(id = collector.getInt("id"), name = collector.getString("name"),
+                    telephone = collector.getString("telephone"), email = collector.getString("email"),
+                    albumsCount = collectorAlbums.length(), collectorAlbums= emptyList()
+                ))
+
+                cont.resume(list)
+            },
+            {
+                Log.e("REST API - VOLLEY", "Error encontrado: $it")
+                cont.resumeWithException(it)
+            }))
+    }
+
+    suspend fun getCollectorAlbums(collectorId:Int) = suspendCoroutine<List<CollectorAlbum>>{ cont->
+        requestQueue.add(getRequest("collectors/$collectorId/albums",
+            { response ->
+                val list = mutableListOf<CollectorAlbum>()
+                val resp = JSONArray(response)
+
+                for (i in 0 until resp.length()) {
+
+                    val collectorAlbum = resp.getJSONObject(i)
+                    val album =  collectorAlbum.getJSONObject("album")
+
+                    list.add(i, CollectorAlbum(id = collectorAlbum.getInt("id"),
+                        status = collectorAlbum.getString("status"),
+                        price = collectorAlbum.getDouble("price"),
+                        album = Album(albumId = album.getInt("id"),
+                            name = album.getString("name"),
+                            cover = album.getString("cover"),
+                            recordLabel = album.getString("recordLabel"),
+                            releaseDate = album.getString("releaseDate"),
+                            genre = album.getString("genre"),
+                            description = album.getString("description"),
+                            tracks = emptyList()
+                            )
+                        )
+                    )
                 }
 
                 cont.resume(list)

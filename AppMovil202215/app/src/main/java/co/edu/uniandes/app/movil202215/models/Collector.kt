@@ -6,4 +6,5 @@ data class Collector (
     val telephone:String,
     val email:String,
     val albumsCount:Int,
+    var collectorAlbums: List<CollectorAlbum>
 )

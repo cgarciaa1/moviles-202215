@@ -63,6 +63,18 @@
         android:name="co.edu.uniandes.app.movil202215.view.CollectorFragment"
         android:label="collector_fragment"
         tools:layout="@layout/collector_fragment" >
+        <action
+            android:id="@+id/action_collectorFragmentNav_to_detailCollectorFragment"
+            app:destination="@id/detailCollectorFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailCollectorFragment"
+        android:name="co.edu.uniandes.app.movil202215.view.DetailCollectorFragment"
+        android:label="comment_fragment"
+        tools:layout="@layout/detail_collector_fragment">
+        <argument android:name="collectorId"
+            app:argType="integer" />
     </fragment>
 
 </navigation>
