@@ -42,9 +42,11 @@ class DetailAlbumFragment : Fragment() {
         viewModelAdapterTrack = TrackAdapter()
 
 
-        val fab = view.findViewById(R.id.add_track) as FloatingActionButton
+        val fab = view.findViewById(R.id.add_track_floating) as FloatingActionButton
         fab.setOnClickListener { view ->
-            Navigation.findNavController(view).navigate(R.id.action_albumDetail_to_addSong)
+            val args: DetailAlbumFragmentArgs by navArgs()
+            val action = DetailAlbumFragmentDirections.actionAddTrack(args.albumId)
+            Navigation.findNavController(view).navigate(action)
         }
 
         return view

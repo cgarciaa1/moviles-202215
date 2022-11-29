@@ -26,7 +26,7 @@ class CreateTrackViewModel(application: Application) :  AndroidViewModel(applica
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
-    fun createObject(album:Album, track:Track) {
+    fun createObject(album: Int, track:Track) {
         try {
             viewModelScope.launch  (Dispatchers.Default){
                 withContext(Dispatchers.IO){

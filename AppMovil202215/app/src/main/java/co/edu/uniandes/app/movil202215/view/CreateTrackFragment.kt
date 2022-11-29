@@ -1,6 +1,7 @@
 package co.edu.uniandes.app.movil202215.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +46,8 @@ class CreateTrackFragment : Fragment() {
             "You can only access the viewModel after onActivityCreated()"
         }
 
-
+        val args: CreateAlbumFragmentArgs by navArgs()
+        Log.d("","agumento"+ args.albumId)
 
         val viewFragment = inflater.inflate(R.layout.album_add_song_fragment, container, false)
 
@@ -66,7 +68,7 @@ class CreateTrackFragment : Fragment() {
                 Toast.makeText(getActivity(), "Existen campos sin datos",Toast.LENGTH_LONG).show()
             }else{
                 val newTrack = Track(trackId = -1, name = name.text.toString(), duration = duration.text.toString())
-                viewModel.createObject(albumId, newTrack)
+                viewModel.createObject(args.albumId, newTrack)
                 Toast.makeText(getActivity(), "Track creado",Toast.LENGTH_LONG).show()
                 Navigation.findNavController(view).navigate(R.id.detailAlbumFragment)
 
