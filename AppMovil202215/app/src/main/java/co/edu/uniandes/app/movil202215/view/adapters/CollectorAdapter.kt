@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.app.movil202215.R
 import co.edu.uniandes.app.movil202215.databinding.CollectorItemBinding
 import co.edu.uniandes.app.movil202215.models.Collector
+import co.edu.uniandes.app.movil202215.view.CollectorFragmentDirections
 
 class CollectorAdapter : RecyclerView.Adapter<CollectorAdapter.CollectorViewHolder> (){
 
@@ -33,14 +35,16 @@ class CollectorAdapter : RecyclerView.Adapter<CollectorAdapter.CollectorViewHold
             it.collector = collectors[position]
         }
 
-        //fragmento para agregar la navegacion hacia el detalle del artista
-        /**    holder.viewDataBinding.root.setOnClickListener {
-        val action = ArtistFragmentDirections.actionAlbumFragmentToCommentFragment(artists[position].id)
-        // Navigate using that action
-        holder.viewDataBinding.root.findNavController().navigate(action)
+        val currentItem = collectors[position]
 
+        holder.viewDataBinding.root.setOnClickListener {
+            val action =
+                CollectorFragmentDirections.actionCollectorFragmentNavToDetailCollectorFragment(
+                    collectors[position].id
+                )
+            // Navigate using that action
+            holder.viewDataBinding.root.findNavController().navigate(action)
         }
-         **/
     }
 
     override fun getItemCount(): Int {
