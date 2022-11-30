@@ -37,7 +37,7 @@
                 android:layout_marginRight="36dp"
                 android:layout_marginBottom="-25dp"
                 android:contentDescription="@string/add_song_title"
-                android:src="@drawable/ic_baseline_add_24"
+                android:src="@drawable/ic_baseline_audiotrack_24"
                 app:backgroundTint="@color/green_background_button" />
 
             <androidx.recyclerview.widget.RecyclerView
