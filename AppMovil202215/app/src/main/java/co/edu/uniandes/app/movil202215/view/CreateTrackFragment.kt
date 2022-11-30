@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import co.edu.uniandes.app.movil202215.R
 import co.edu.uniandes.app.movil202215.models.Track
@@ -70,8 +71,9 @@ class CreateTrackFragment : Fragment() {
                 val newTrack = Track(trackId = -1, name = name.text.toString(), duration = duration.text.toString())
                 viewModel.createObject(args.albumId, newTrack)
                 Toast.makeText(getActivity(), "Track creado",Toast.LENGTH_LONG).show()
-                Navigation.findNavController(view).navigate(R.id.detailAlbumFragment)
 
+                val action = CreateTrackFragmentDirections.actionAddTrackFloatingToDetailAlbumFragment(args.albumId)
+                Navigation.findNavController(view).navigate(action)
             }
 
         }

@@ -52,6 +52,9 @@
         <argument
             android:name="albumId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_add_track_floating_to_detailAlbumFragment"
+            app:destination="@id/detailAlbumFragment" />
     </fragment>
 
     <fragment
