@@ -125,7 +125,6 @@ class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
-
     suspend fun getArtistById(artistId:Int) = suspendCoroutine<List<Artist>>{ cont->
         requestQueue.add(getRequest("musicians/$artistId",
             { response ->
@@ -201,18 +200,14 @@ class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
-    suspend fun createTrack(albumData:Album) = suspendCoroutine<List<Album>>{ cont->
+    suspend fun associateTrack(albumId:Int, track: Track) = suspendCoroutine<List<Album>>{ cont->
 
         val parameters = JSONObject()
 
-        parameters.put("name",albumData.name)
-        parameters.put("cover",albumData.cover)
-        parameters.put("releaseDate",albumData.releaseDate)
-        parameters.put("description",albumData.description)
-        parameters.put("genre",albumData.genre)
-        parameters.put("recordLabel",albumData.recordLabel)
+        parameters.put("name",track.name)
+        parameters.put("duration",track.duration)
 
-        requestQueue.add(postRequest("albums", parameters,
+        requestQueue.add(postRequest("albums/${albumId}/tracks", parameters,
             { response ->
                 cont.resume( listOf())
             },
@@ -221,13 +216,13 @@ class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
-
     private fun getRequest(path:String, responseListener: Response.Listener<String>, errorListener: Response.ErrorListener): StringRequest {
         val request = StringRequest(Request.Method.GET, BASE_URL+path, responseListener,errorListener)
         request.retryPolicy = DefaultRetryPolicy(customTimeout,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
         return request
     }
+
     private fun postRequest(path: String, body: JSONObject,  responseListener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener ):JsonObjectRequest{
 
         val request = JsonObjectRequest(Request.Method.POST, BASE_URL+path, body, responseListener, errorListener)

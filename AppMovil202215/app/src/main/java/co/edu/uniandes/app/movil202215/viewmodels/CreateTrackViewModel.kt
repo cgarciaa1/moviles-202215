@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import co.edu.uniandes.app.movil202215.models.Track
 import co.edu.uniandes.app.movil202215.models.Album
+import co.edu.uniandes.app.movil202215.repositories.AlbumRepository
 import co.edu.uniandes.app.movil202215.repositories.DetailAlbumRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,7 +13,7 @@ import kotlinx.coroutines.withContext
 
 class CreateTrackViewModel(application: Application) :  AndroidViewModel(application) {
 
-    private val detailAlbum = DetailAlbumRepository(application)
+    private val albumRepository = AlbumRepository(application)
 
     private val _response = MutableLiveData<Boolean>()
 
@@ -31,7 +32,7 @@ class CreateTrackViewModel(application: Application) :  AndroidViewModel(applica
             viewModelScope.launch  (Dispatchers.Default){
                 withContext(Dispatchers.IO){
 
-                    detailAlbum.addSong(album, track)
+                    albumRepository.createTrack(album, track)
 
                 }
                 _eventNetworkError.postValue(false)

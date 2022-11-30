@@ -15,4 +15,10 @@ class AlbumRepository (val application: Application){
         //Determinar la fuente de datos que se va a utilizar. Si es necesario consultar la red, ejecutar el siguiente código
         return NetworkServiceAdapter.getInstance(application).createAlbum(albumData)
     }
+
+
+    suspend fun createTrack(albumId: Int, track: Track) : List<Album>{
+        //Determinar la fuente de datos que se va a utilizar. Si es necesario consultar la red, ejecutar el siguiente código
+        return NetworkServiceAdapter.getInstance(application).associateTrack(albumId, track)
+    }
 }
