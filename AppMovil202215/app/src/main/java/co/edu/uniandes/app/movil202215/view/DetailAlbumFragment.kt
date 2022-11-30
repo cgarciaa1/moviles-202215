@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import co.edu.uniandes.app.movil202215.databinding.DetailAlbumFragmentBinding
 import co.edu.uniandes.app.movil202215.view.adapters.DetailAlbumAdapter
 import co.edu.uniandes.app.movil202215.view.adapters.TrackAdapter
 import co.edu.uniandes.app.movil202215.viewmodels.DetailAlbumViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 /**
@@ -38,6 +40,7 @@ class DetailAlbumFragment : Fragment() {
         val view = binding.root
         viewModelAdapter = DetailAlbumAdapter()
         viewModelAdapterTrack = TrackAdapter()
+
         return view
     }
 
@@ -49,6 +52,15 @@ class DetailAlbumFragment : Fragment() {
         recyclerViewTrack = binding.tracksRv
         recyclerViewTrack.layoutManager = LinearLayoutManager(context)
         recyclerViewTrack.adapter = viewModelAdapterTrack
+
+
+        val fab = view.findViewById(R.id.add_track_floating) as FloatingActionButton
+        fab.setOnClickListener { view ->
+            val args: DetailAlbumFragmentArgs by navArgs()
+            val action = DetailAlbumFragmentDirections.actionAddTrack(args.albumId)
+            Navigation.findNavController(view).navigate(action)
+        }
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

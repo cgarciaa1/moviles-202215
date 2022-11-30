@@ -122,7 +122,6 @@ class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
-
     suspend fun getArtistById(artistId:Int) = suspendCoroutine<List<Artist>>{ cont->
         requestQueue.add(getRequest("musicians/$artistId",
             { response ->
@@ -254,6 +253,21 @@ class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
+    suspend fun associateTrack(albumId:Int, track: Track) = suspendCoroutine<List<Album>>{ cont->
+
+        val parameters = JSONObject()
+
+        parameters.put("name",track.name)
+        parameters.put("duration",track.duration)
+
+        requestQueue.add(postRequest("albums/${albumId}/tracks", parameters,
+            { response ->
+                cont.resume( listOf())
+            },
+            {
+                cont.resumeWithException(it)
+            }))
+    }
 
     private fun getRequest(path:String, responseListener: Response.Listener<String>, errorListener: Response.ErrorListener): StringRequest {
         val request = StringRequest(Request.Method.GET, BASE_URL+path, responseListener,errorListener)
@@ -261,6 +275,7 @@ class NetworkServiceAdapter constructor(context: Context) {
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
         return request
     }
+
     private fun postRequest(path: String, body: JSONObject,  responseListener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener ):JsonObjectRequest{
 
         val request = JsonObjectRequest(Request.Method.POST, BASE_URL+path, body, responseListener, errorListener)

@@ -37,6 +37,24 @@
         <argument
             android:name="albumId"
             app:argType="integer" />
+
+        <action
+            android:id="@+id/action_add_track"
+            app:destination="@id/add_track_floating" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_track_floating"
+        android:name="co.edu.uniandes.app.movil202215.view.CreateTrackFragment"
+        android:label="add_track_fragment"
+        tools:layout="@layout/album_add_song_fragment" >
+
+        <argument
+            android:name="albumId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_add_track_floating_to_detailAlbumFragment"
+            app:destination="@id/detailAlbumFragment" />
     </fragment>
 
     <fragment
@@ -56,6 +74,7 @@
         tools:layout="@layout/detail_artist_fragment">
         <argument android:name="artistId"
             app:argType="integer" />
+
     </fragment>
 
     <fragment

@@ -54,8 +54,6 @@
         android:textSize="15sp"
         android:text="@{album_detail.description}"
         app:layout_constraintTop_toBottomOf="@id/coverDetail" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

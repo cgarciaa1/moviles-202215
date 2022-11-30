@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.app.movil202215.R
 import co.edu.uniandes.app.movil202215.databinding.DetailAlbumItemBinding
 import co.edu.uniandes.app.movil202215.models.Album
+import co.edu.uniandes.app.movil202215.view.AlbumFragmentDirections
+import co.edu.uniandes.app.movil202215.view.DetailAlbumFragmentDirections
 import com.squareup.picasso.Picasso
 
 class DetailAlbumAdapter : RecyclerView.Adapter<DetailAlbumAdapter.CommentViewHolder>(){
@@ -35,6 +38,12 @@ class DetailAlbumAdapter : RecyclerView.Adapter<DetailAlbumAdapter.CommentViewHo
         }
         val currentItem = detailAlbum[position]
         holder.bindImage(currentItem)
+
+        holder.viewDataBinding.root.setOnClickListener {
+            val action = DetailAlbumFragmentDirections.actionAddTrack(detailAlbum[position].albumId)
+            // Navigate using that action
+            holder.viewDataBinding.root.findNavController().navigate(action)
+        }
     }
 
     override fun getItemCount(): Int {

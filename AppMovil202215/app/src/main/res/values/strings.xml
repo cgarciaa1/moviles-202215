@@ -14,6 +14,10 @@
     <string name="text_create_album">Crear álbum</string>
     <string name="image_album_description">Imagen del álbum</string>
     <string name="image_artist_description">Imagen del artista</string>
+    <string name="add_song_title">Agregar Track</string>
+    <string name="add_song_form_name">Nombre del Track</string>
+    <string name="add_song_form_duration">Duración</string>
+    <string name="add_song_form_button">Agregar Track</string>
     <string name="add_albums">Agregar álbum</string>
     <string name="input_album_name">Nombre del álbum</string>
     <string name="input_album_description">Descripción del álbum</string>
