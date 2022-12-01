@@ -74,7 +74,9 @@ class CreateAlbumFragment : Fragment() {
                     releaseDate = date.text.toString(), genre = genre.getSelectedItem().toString(),description = description.text.toString(),  tracks = listOf())
                 viewModel.createObject(album)
                 Toast.makeText(getActivity(), "Álbum creado",Toast.LENGTH_LONG).show()
-                Navigation.findNavController(view).navigate(R.id.albumsFragment)
+
+                val action = CreateAlbumFragmentDirections.actionAddAlbumToAlbumsFragment()
+                Navigation.findNavController(view).navigate(action)
 
             }
 

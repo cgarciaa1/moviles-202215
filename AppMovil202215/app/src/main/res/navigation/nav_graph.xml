@@ -27,6 +27,9 @@
         android:name="co.edu.uniandes.app.movil202215.view.CreateAlbumFragment"
         android:label="create_album_fragment"
         tools:layout="@layout/fragment_create_album" >
+        <action
+            android:id="@+id/action_add_album_to_AlbumsFragment"
+            app:destination="@id/albumsFragment" />
     </fragment>
 
     <fragment
