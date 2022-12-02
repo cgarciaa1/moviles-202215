@@ -21,7 +21,7 @@ import org.junit.runner.RunWith
  */
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class CollectorListTest {
+class CollectorDetailTest {
 
 
     @Rule
@@ -30,18 +30,19 @@ class CollectorListTest {
         ActivityScenarioRule (MainActivity::class.java)
 
     @Test
-    fun listCollectorsHu05() {
+    fun getCollectorDetailHu06() {
 
         Thread.sleep(10000)
         onView(allOf(withResourceName("collectorsFragmentNav"),
             isDisplayed()))
             .perform(click())
 
-        val collector1 = onView(allOf(withId(R.id.card_view_layout_text_title_collector), withText("Manolo Bellon"),isDisplayed()))
-        collector1.check(ViewAssertions.matches(isDisplayed()))
+        Thread.sleep(3000)
+        onView(allOf(withId(R.id.card_view_layout_text_title_collector), withText("Manolo Bellon"),isDisplayed())).perform(click())
 
-        val collector2 = onView(allOf(withId(R.id.card_view_layout_text_title_collector), withText("Jaime Monsalve"),isDisplayed()))
-        collector2.check(ViewAssertions.matches(isDisplayed()))
+        Thread.sleep(3000)
+        val collector = onView(allOf(withId(R.id.detail_layout_title_collector), withText("Manolo Bellon"),isDisplayed()))
+        collector.check(ViewAssertions.matches(isDisplayed()))
 
         Thread.sleep(3000)
 

@@ -25,7 +25,7 @@ import java.time.LocalDateTime
  */
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class CreateAlbumTest {
+class AddTrackTest {
 
 
     @Rule
@@ -34,38 +34,35 @@ class CreateAlbumTest {
         ActivityScenarioRule (MainActivity::class.java)
 
     @Test
-    fun createAlbumHu07() {
+    fun addTrackHu08() {
 
         Thread.sleep(10000)
         onView(allOf(withResourceName("albumsFragment"),
             isDisplayed()))
             .perform(click())
 
-        onView(allOf(withResourceName("add_album"),
-            isDisplayed()))
-            .perform(click())
+        val name = "Buscando América"
 
-        val name = "Prueba nombre " + System.currentTimeMillis()
+        onView(allOf(withId(R.id.card_view_layout_text_title), withText(name))).perform(click())
 
-        onView(allOf(withResourceName("input_album_name")))
-            .perform(scrollTo(),typeText(name))
+        Thread.sleep(2000)
 
-        onView(allOf(withResourceName("input_album_description")))
-            .perform(scrollTo(),typeText("Prueba descripcion"))
+        onView(allOf(withResourceName("add_track_floating"), isDisplayed())).perform(click())
+        Thread.sleep(2000)
 
-        onView(allOf(withResourceName("input_album_date"))).perform(scrollTo(),
-            typeText("2022-11-28"))
+        val trackName = System.currentTimeMillis().toString()
+        onView(allOf(withResourceName("add_song_name")))
+            .perform(scrollTo(),typeText(trackName))
 
-        onView(allOf(withResourceName("input_album_cover"))).perform(scrollTo(), typeText
-            ("https://www.vibe.com/wp-content/uploads/2022/08/PSDMIJA_EC001-e1661786277689.jpg"))
+        onView(allOf(withResourceName("add_song_duration")))
+            .perform(scrollTo(),typeText("3:00"))
 
         onView(ViewMatchers.isRoot()).perform(ViewActions.closeSoftKeyboard())
-        Thread.sleep(3000)
+        Thread.sleep(2000)
 
-        onView(allOf(withResourceName("button_create_album"))).perform(scrollTo(), click())
+        onView(allOf(withResourceName("add_song_button"))).perform(scrollTo(), click())
 
-        onView(allOf(withResourceName("albumsFragment"))).perform(click())
-        Thread.sleep(3000)
+        Thread.sleep(2000)
 
     }
 }
