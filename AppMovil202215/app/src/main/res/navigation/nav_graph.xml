@@ -17,6 +17,19 @@
         <action
             android:id="@+id/action_detailArtistFragment_to_detailAlbumFragment"
             app:destination="@id/detailAlbumFragment" />
+        <action
+            android:id="@+id/action_albumsFragment_to_add_album"
+            app:destination="@id/add_album" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_album"
+        android:name="co.edu.uniandes.app.movil202215.view.CreateAlbumFragment"
+        android:label="create_album_fragment"
+        tools:layout="@layout/fragment_create_album" >
+        <action
+            android:id="@+id/action_add_album_to_AlbumsFragment"
+            app:destination="@id/albumsFragment" />
     </fragment>
 
     <fragment
@@ -27,6 +40,24 @@
         <argument
             android:name="albumId"
             app:argType="integer" />
+
+        <action
+            android:id="@+id/action_add_track"
+            app:destination="@id/add_track_floating" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_track_floating"
+        android:name="co.edu.uniandes.app.movil202215.view.CreateTrackFragment"
+        android:label="add_track_fragment"
+        tools:layout="@layout/album_add_song_fragment" >
+
+        <argument
+            android:name="albumId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_add_track_floating_to_detailAlbumFragment"
+            app:destination="@id/detailAlbumFragment" />
     </fragment>
 
     <fragment
@@ -46,6 +77,7 @@
         tools:layout="@layout/detail_artist_fragment">
         <argument android:name="artistId"
             app:argType="integer" />
+
     </fragment>
 
     <fragment
@@ -53,6 +85,18 @@
         android:name="co.edu.uniandes.app.movil202215.view.CollectorFragment"
         android:label="collector_fragment"
         tools:layout="@layout/collector_fragment" >
+        <action
+            android:id="@+id/action_collectorFragmentNav_to_detailCollectorFragment"
+            app:destination="@id/detailCollectorFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailCollectorFragment"
+        android:name="co.edu.uniandes.app.movil202215.view.DetailCollectorFragment"
+        android:label="comment_fragment"
+        tools:layout="@layout/detail_collector_fragment">
+        <argument android:name="collectorId"
+            app:argType="integer" />
     </fragment>
 
 </navigation>

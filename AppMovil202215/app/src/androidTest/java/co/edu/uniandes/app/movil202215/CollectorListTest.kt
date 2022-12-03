@@ -30,7 +30,7 @@ class CollectorListTest {
         ActivityScenarioRule (MainActivity::class.java)
 
     @Test
-    fun listArtistHu05() {
+    fun listCollectorsHu05() {
 
         Thread.sleep(10000)
         onView(allOf(withResourceName("collectorsFragmentNav"),

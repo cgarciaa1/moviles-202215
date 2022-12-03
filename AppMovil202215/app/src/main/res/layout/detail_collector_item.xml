@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="collector_detail" type="co.edu.uniandes.app.movil202215.models.Collector"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green_background"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/green_background"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/detail_layout_top">
+            <TextView
+                android:id="@+id/detail_layout_title_collector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black_app"
+                android:textSize="20sp"
+                android:text="@{collector_detail.name}"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/detail_layout_detail_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_app"
+                android:textSize="15sp"
+                android:text="@{collector_detail.telephone}"
+                app:layout_constraintTop_toBottomOf="@id/detail_layout_title_collector" />
+
+            <TextView
+                android:id="@+id/detail_layout_detail_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_app"
+                android:textSize="15sp"
+                android:text="@{collector_detail.email}"
+                app:layout_constraintTop_toBottomOf="@id/detail_layout_detail_1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

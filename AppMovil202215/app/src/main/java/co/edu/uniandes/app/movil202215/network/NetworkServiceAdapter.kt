@@ -2,11 +2,11 @@ package co.edu.uniandes.app.movil202215.network
 
 import android.content.Context
 import android.util.Log
-import co.edu.uniandes.app.movil202215.models.Album
-import co.edu.uniandes.app.movil202215.models.Artist
-import co.edu.uniandes.app.movil202215.models.Collector
-import co.edu.uniandes.app.movil202215.models.Track
-import com.android.volley.*
+import co.edu.uniandes.app.movil202215.models.*
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -21,7 +21,7 @@ class NetworkServiceAdapter constructor(context: Context) {
     private val customTimeout = 15000
 
     companion object{
-        const val BASE_URL= "https://back-vinilos.herokuapp.com/"
+        const val BASE_URL= "https://vinilos-app-grupo-8.herokuapp.com/"
         private var instance: NetworkServiceAdapter? = null
         fun getInstance(context: Context) =
             instance ?: synchronized(this) {
@@ -122,7 +122,6 @@ class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
-
     suspend fun getArtistById(artistId:Int) = suspendCoroutine<List<Artist>>{ cont->
         requestQueue.add(getRequest("musicians/$artistId",
             { response ->
@@ -167,7 +166,8 @@ class NetworkServiceAdapter constructor(context: Context) {
 
                     list.add(i, Collector(id = collector.getInt("id"), name = collector.getString("name"),
                         telephone = collector.getString("telephone"), email = collector.getString("email"),
-                        albumsCount = collectorAlbums.length()))
+                        albumsCount = collectorAlbums.length(), collectorAlbums = emptyList()
+                    ))
                 }
 
                 cont.resume(list)
@@ -178,13 +178,109 @@ class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
+    suspend fun getCollectorById(collectorId:Int) = suspendCoroutine<List<Collector>>{ cont->
+        requestQueue.add(getRequest("collectors/$collectorId",
+            { response ->
+                val list = mutableListOf<Collector>()
+
+                val collector = JSONObject(response)
+                val collectorAlbums :JSONArray =  collector.getJSONArray("collectorAlbums")
+                list.add(Collector(id = collector.getInt("id"), name = collector.getString("name"),
+                    telephone = collector.getString("telephone"), email = collector.getString("email"),
+                    albumsCount = collectorAlbums.length(), collectorAlbums= emptyList()
+                ))
+
+                cont.resume(list)
+            },
+            {
+                Log.e("REST API - VOLLEY", "Error encontrado: $it")
+                cont.resumeWithException(it)
+            }))
+    }
+
+    suspend fun getCollectorAlbums(collectorId:Int) = suspendCoroutine<List<CollectorAlbum>>{ cont->
+        requestQueue.add(getRequest("collectors/$collectorId/albums",
+            { response ->
+                val list = mutableListOf<CollectorAlbum>()
+                val resp = JSONArray(response)
+
+                for (i in 0 until resp.length()) {
+
+                    val collectorAlbum = resp.getJSONObject(i)
+                    val album =  collectorAlbum.getJSONObject("album")
+
+                    list.add(i, CollectorAlbum(id = collectorAlbum.getInt("id"),
+                        status = collectorAlbum.getString("status"),
+                        price = collectorAlbum.getDouble("price"),
+                        album = Album(albumId = album.getInt("id"),
+                            name = album.getString("name"),
+                            cover = album.getString("cover"),
+                            recordLabel = album.getString("recordLabel"),
+                            releaseDate = album.getString("releaseDate"),
+                            genre = album.getString("genre"),
+                            description = album.getString("description"),
+                            tracks = emptyList()
+                            )
+                        )
+                    )
+                }
+
+                cont.resume(list)
+            },
+            {
+                Log.e("REST API - VOLLEY", "Error encontrado: $it")
+                cont.resumeWithException(it)
+            }))
+    }
+
+    suspend fun createAlbum(albumData:Album) = suspendCoroutine<List<Album>>{ cont->
+
+        val parameters = JSONObject()
+
+        parameters.put("name",albumData.name)
+        parameters.put("cover",albumData.cover)
+        parameters.put("releaseDate",albumData.releaseDate)
+        parameters.put("description",albumData.description)
+        parameters.put("genre",albumData.genre)
+        parameters.put("recordLabel",albumData.recordLabel)
+
+        requestQueue.add(postRequest("albums", parameters,
+            { response ->
+                cont.resume( listOf())
+            },
+            {
+                 cont.resumeWithException(it)
+            }))
+    }
+
+    suspend fun associateTrack(albumId:Int, track: Track) = suspendCoroutine<List<Album>>{ cont->
+
+        val parameters = JSONObject()
+
+        parameters.put("name",track.name)
+        parameters.put("duration",track.duration)
+
+        requestQueue.add(postRequest("albums/${albumId}/tracks", parameters,
+            { response ->
+                cont.resume( listOf())
+            },
+            {
+                cont.resumeWithException(it)
+            }))
+    }
+
     private fun getRequest(path:String, responseListener: Response.Listener<String>, errorListener: Response.ErrorListener): StringRequest {
         val request = StringRequest(Request.Method.GET, BASE_URL+path, responseListener,errorListener)
         request.retryPolicy = DefaultRetryPolicy(customTimeout,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
         return request
     }
+
     private fun postRequest(path: String, body: JSONObject,  responseListener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener ):JsonObjectRequest{
-        return  JsonObjectRequest(Request.Method.POST, BASE_URL+path, body, responseListener, errorListener)
+
+        val request = JsonObjectRequest(Request.Method.POST, BASE_URL+path, body, responseListener, errorListener)
+        request.retryPolicy = DefaultRetryPolicy(customTimeout,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+        return request
     }
 }

@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.edu.uniandes.app.movil202215.R
 import co.edu.uniandes.app.movil202215.databinding.AlbumFragmentBinding
 import co.edu.uniandes.app.movil202215.view.adapters.AlbumsAdapter
 import co.edu.uniandes.app.movil202215.viewmodels.AlbumViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -31,6 +34,13 @@ class AlbumFragment : Fragment() {
         _binding = AlbumFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
         viewModelAdapter = AlbumsAdapter()
+
+
+        val fab = view.findViewById(R.id.add_album) as FloatingActionButton
+        fab.setOnClickListener { view ->
+            Navigation.findNavController(view).navigate(R.id.action_albumsFragment_to_add_album)
+        }
+
         return view
     }
 

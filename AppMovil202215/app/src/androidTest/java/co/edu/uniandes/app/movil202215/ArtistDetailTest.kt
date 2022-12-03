@@ -29,7 +29,7 @@ class ArtistDetailTest {
         ActivityScenarioRule (MainActivity::class.java)
 
     @Test
-    fun getAlbumHu04() {
+    fun getArtistHu04() {
 
         Thread.sleep(10000)
         onView(allOf(withResourceName("artistFragment"),isDisplayed())).perform(click())

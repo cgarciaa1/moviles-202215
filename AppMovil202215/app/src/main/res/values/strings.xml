@@ -4,14 +4,40 @@
     <string name="title_albums">Albumes</string>
     <string name="title_artists">Artistas</string>
     <string name="title_collectors">Coleccionistas</string>
+    <string name="title_detail_collectors">Detalle coleccionista</string>
     <string name="title_comments">Comentarios del álbum</string>
     <string name="artist_comments">Comentarios del Artista</string>
     <string name="artist_birthDate">Fecha de Nacimiento: </string>
     <string name="bottom_nav_item_albums">Álbumes</string>
     <string name="bottom_nav_item_collectors">Coleccionistas</string>
     <string name="bottom_nav_item_artist">Artistas</string>
+    <string name="text_create_album">Crear álbum</string>
     <string name="image_album_description">Imagen del álbum</string>
     <string name="image_artist_description">Imagen del artista</string>
+    <string name="add_song_title">Agregar Track</string>
+    <string name="add_song_form_name">Nombre del Track</string>
+    <string name="add_song_form_duration">Duración</string>
+    <string name="add_song_form_button">Agregar Track</string>
+    <string name="add_albums">Agregar álbum</string>
+    <string name="input_album_name">Nombre del álbum</string>
+    <string name="input_album_description">Descripción del álbum</string>
+    <string name="input_release_date">Fecha de publicación</string>
+    <string name="record">Sello</string>
+    <string name="input_album_genre">Género del álbum</string>
+    <string name="input_album_url">URL del cover</string>
+    <string name="buton_add_album">Agregar</string>
     <string name="track_count_label">Álbumes:\u0020</string>
-
+    <string-array name="genre_array">
+        <item>Classical</item>
+        <item>Salsa</item>
+        <item>Rock</item>
+        <item>Folk</item>
+    </string-array>
+    <string-array name="record_array">
+        <item>Sony Music</item>
+        <item>EMI</item>
+        <item>Discos Fuentes</item>
+        <item>Elektra</item>
+        <item>Fania Records</item>
+    </string-array>
 </resources>
